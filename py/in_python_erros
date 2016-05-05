@@ -1,4 +1,4 @@
-  File "in_python_code.py", line 15
-    print(5)
-        ^
+  File "py/in_python_code.py", line 3
+    print(5))
+            ^
 SyntaxError: invalid syntax

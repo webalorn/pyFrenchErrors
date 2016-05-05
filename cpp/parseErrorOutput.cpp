@@ -7,39 +7,34 @@
 
 PyError::PyError(std::vector<std::string> errorOutput) {
     if (errorOutput.empty()) {
-        throw std::string("Il n'y a pas d'erreure");
+        throw std::string("Il n'y a pas d'erreur");
     }
-    //std::cerr << "Construct" << std::endl;
 
     lineOfError = PyError::undefinedPosition, charOfError = PyError::undefinedPosition;
-    //std::cerr << "step 1" << std::endl;
     auto lastLineIt = --errorOutput.end();
     auto blockContentError = errorOutput.begin();
-    //std::cerr << "step 2" << std::endl;
 
+    std::string fileName = "";
     for (auto lineIt = errorOutput.begin(); lineIt != lastLineIt; ++lineIt) {
-        if (std::regex_match(*lineIt, std::regex("  File .*"))) {
-            blockContentError = lineIt;
+        std::smatch extract;
+        if (std::regex_search(*lineIt, extract, std::regex("  File \"(.*)\", line .*"))) {
+            if (fileName == "" || fileName == extract[1]) {
+                blockContentError = lineIt;
+                fileName = extract[1];
+            }
         }
     }
-    //std::cerr << "step 3" << std::endl;
-    //std::cerr << "Lastline = '" << (*lastLineIt) << "'" << std::endl;
-    //std::cerr << "last block" << std::endl;
-    for (auto it = blockContentError; it != lastLineIt; it++) {
-        //std::cerr << "-> " << "'"  << (*it) << "'"  << std::endl;
-    }
+    //std::cerr << "Good line: " << *blockContentError << std::endl;
 
     parseErrorLastLine(*lastLineIt);
-    //std::cerr << "step 4" << std::endl;
 
     std::vector<std::string> lastBlock;
     copy(blockContentError, lastLineIt, std::back_inserter(lastBlock));
     parseBlockContentError(lastBlock);
-    //std::cerr << "step 5" << std::endl;
 }
 
 void PyError::parseErrorLastLine(std::string line) {
-    std::regex rgx("^([A-Za-z0-9]*): (.*)");
+    std::regex rgx("^([^:]*): (.*)");
     std::smatch match;
     //std::cerr << "reagex_search " << line << std::endl;
     if (std::regex_search(line, match, rgx)) {
@@ -55,7 +50,7 @@ void PyError::parseBlockContentError(std::vector<std::string> blockLines) {
         if (iLine == 0) {
             std::regex rgxGetLine(", line ([0-9]*)(, in )?(.*)");
             if (std::regex_search(blockLines[iLine], match, rgxGetLine)) {
-                lineOfError = stoi(match[1]);
+                lineOfError = stoi(match[1]) - 1; /* -1: from [1 : N] to [0 : N-1] */
                 //std::cerr << "Line number: " << lineOfError << std::endl;
             } else {
                 // TODO: exception

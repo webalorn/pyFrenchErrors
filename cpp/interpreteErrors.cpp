@@ -2,6 +2,7 @@
 #include <string>
 #include <map>
 #include <regex>
+#include <iostream>
 
 PyErrorMeaning::PyErrorMeaning(PyError error, std::vector<std::string> addedExceptions, PyFile codeFile) {
     PyCode code = error.getCode();
@@ -30,8 +31,8 @@ PyErrorMeaning::PyErrorMeaning(PyError error, std::vector<std::string> addedExce
             return frErr::conditionOneEqual;
         }
         if (codeFile.getNbOpenBrackets(error.getLine()) > 0) {
-            paramsFr[0] = std::to_string(codeFile.getLineOpenFirstBracket(error.getLine()) + 1);
-            errorIsTrue = false;
+            //paramsFr[0] = std::to_string(codeFile.getLineOpenFirstBracket(error.getLine()) + 1);
+            realLineOfError = codeFile.getLineOpenFirstBracket(error.getLine());
             return frErr::previousErrorBrackets;
         }
         if (code.countOpenCloseBrackets() != 0)
@@ -77,13 +78,13 @@ PyErrorMeaning::PyErrorMeaning(PyError error, std::vector<std::string> addedExce
             return frErr::ImportError;
         return frErr::undefined;
     };
-    errorIsTrue = true;
+    realLineOfError = error.getLine();
     errorMessageId = getErrorId();
+    //std::cerr << "Error type: '" << error.getType() << "'" << std::endl;
     for (std::string customType : addedExceptions) {
         if (error.getType() == customType) {
             paramsFr[0] = error.getMessage();
             errorMessageId = frErr::custom;
-            errorIsTrue = false;
         }
     }
 }
@@ -100,6 +101,7 @@ std::string PyErrorMeaning::frMeaning(frErr errorMessageId) {
         case frErr::deuxPointsDef: return "Une définition de fonction 'def' doit se terminer par les deux points ':' comme ceci -> 'def maFonction():'";
 
         case frErr::conditionOneEqual: return "Pour écrire une égalitée dans une condition, on doit mettre un double égal, et donc écrire: a == b";
+        case frErr::previousErrorBrackets:
         case frErr::errorBrackets: return "Tu dois avoir autant de parenthèses ouvrantes que fermetantes: tu peux écrire (a*(b+c)) mais PAS (a*(b+c) NI a*(b+c))";
 
         case frErr::plusGrandEgalInversion: return "Tu ne dois PAS écrire => mais : >=";
@@ -121,7 +123,6 @@ std::string PyErrorMeaning::frMeaning(frErr errorMessageId) {
         case frErr::undefinedVar: return std::string("La variable ") + paramsFr[0] + std::string(" n'existe pas [encore] à cet endroit");
         case frErr::returnOutsideFct: return "L'instruction 'return' doit se trouver dans une fonction. Elle termine la fonction et indique ce qu'elle retourne.";
 
-        case frErr::previousErrorBrackets: return std::string("A la ligne ") + paramsFr[0] + std::string(" les parenthèses n'ont pas toutes étée fermées");
         // other
         case frErr::custom: return paramsFr[0];
         default:;
@@ -134,6 +135,6 @@ std::string PyErrorMeaning::getFrenchErrorMessage() {
 bool PyErrorMeaning::knowWhatErrorIs() {
     return (errorMessageId != frErr::undefined);
 }
-bool PyErrorMeaning::getIfPyErrorIsTrue() {
-    return errorIsTrue;
+int PyErrorMeaning::getRealErrorLine() {
+    return realLineOfError;
 }

@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include "pyCode.hpp"
+#include "pyFile.hpp"
 
 class PyError {
 public:

@@ -42,3 +42,9 @@ int PyFile::getLineOpenFirstBracket(int iLine) {
         iLine --;
     return iLine;
 }
+
+std::string PyFile::getLine(int iLine) {
+    if (iLine < 0 || iLine >= (int)linesCode.size())
+        return "--- Error: line inexistante ---";
+    return linesCode[iLine];
+}

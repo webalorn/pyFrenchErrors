@@ -7,31 +7,26 @@
 #include <vector>
 
 std::vector<std::string> getFile(std::string fileName) {
-    std::cerr << "Opening file " << fileName  << "..."<< std::endl;
     std::ifstream errorFile(fileName);
     std::vector<std::string> linesOfFile;
     std::string line;
     while (std::getline(errorFile, line)) {
         linesOfFile.push_back(line);
     }
-    std::cerr << "DONE" << std::endl;
     return linesOfFile;
 }
 
 int main() {
     try {
-        system("python in_python_code.py 2> in_python_erros > /dev/null");
-        //std::cerr << "Create pyErr" << std::endl;
-        PyError pyErr(getFile("py/in_python_erros"));
-        //std::cerr << "Create codeFile" << std::endl;
+        system("python py/in_python_code.py 2> py/in_python_erros > /dev/null");
         PyFile codeFile(getFile("py/in_python_code.py"));
-        //std::cerr << "Create meaning" << std::endl;
-        PyErrorMeaning meaning(pyErr, {}, codeFile);
-        //std::cerr << "Tests" << std::endl;
-        if (meaning.getIfPyErrorIsTrue()) {
-            std::cout << "-> Une erreure s'est produite à la ligne " << pyErr.getLine() << " de ton code" << std::endl;
-            std::cout << "Tu as écrit le code: " << pyErr.getCode().getLine() << std::endl << std::endl;
-        }
+        PyError pyErr(getFile("py/in_python_erros"));
+        PyErrorMeaning meaning(pyErr, {"module.MyError"}, codeFile);
+
+
+        std::cout << "-> Une erreure s'est produite à la ligne " << meaning.getRealErrorLine() + 1 /* +1: for humans */ << " de ton code" << std::endl;
+        std::cout << "Tu as écrit le code: " << std::endl << codeFile.getLine(meaning.getRealErrorLine()) << std::endl << std::endl;
+
         if (meaning.knowWhatErrorIs()) {
             std::cout << "-> Voici le problème: " << std::endl;
             std::cout << meaning.getFrenchErrorMessage() << std::endl;

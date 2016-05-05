@@ -8,7 +8,7 @@ SOURCES=$(wildcard cpp/*.cpp)
 OBJECTS=$(SOURCES:cpp/%.cpp=obj/%.o)
 EXECUTABLE=readErr
 MAINFILE=main.cpp
-MAINOBJ=$(MAINFILE:.cpp=.o)
+MAINOBJ=obj/main.o
 
 all: $(SOURCES) $(MAINFILE) $(EXECUTABLE)
 

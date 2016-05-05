@@ -1,35 +1,10 @@
-print(4)
-a = (5+3)
-print(5)
-print(5)
-print(5)
-print(5)
-print(5)
-print(5)
-print(5)
+from module import *
 
+print(5))
 
-print(5
-
-
-print(5)
-print(5)
-print(5
-print(5)
-print(5)
-print(5)
-print(5)
-print(5)
-print(5)
-print(5)
-print(5)
-print(5)
-print(5)
-print(5)
-print(5)
-print(5)
-print(5)
-print(5)
-print(5)
-print(5)
-print(5)
+def boucle(a):
+    if a > 0:
+        boucle(a-1)
+    else:
+        lancer(3)
+boucle(3)

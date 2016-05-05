@@ -32,13 +32,13 @@ public:
     PyErrorMeaning(PyError, std::vector<std::string>, PyFile);
     std::string getFrenchErrorMessage();
     bool knowWhatErrorIs();
-    bool getIfPyErrorIsTrue();
+    int getRealErrorLine();
 
 private:
     frErr errorMessageId;
     static const int MAX_PARAMETERS = 3;
     std::array<std::string, PyErrorMeaning::MAX_PARAMETERS> paramsFr;
-    bool errorIsTrue;
+    int realLineOfError;
 public:
     std::string frMeaning(frErr);
 };

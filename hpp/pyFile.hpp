@@ -9,6 +9,7 @@ public:
     PyFile(std::vector<std::string>);
     int getNbOpenBrackets(int);
     int getLineOpenFirstBracket(int);
+    std::string getLine(int);
 private:
     std::vector<std::string> linesCode;
     std::vector<int> nbOpenBracketsLine;
