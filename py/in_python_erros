@@ -1,0 +1,4 @@
+  File "in_python_code.py", line 15
+    print(5)
+        ^
+SyntaxError: invalid syntax
