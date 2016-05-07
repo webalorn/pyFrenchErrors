@@ -58,7 +58,7 @@ void PyError::parseBlockContentError(std::vector<std::string> blockLines) {
             }
         } else if (iLine == 1) {
             pyCode = blockLines[iLine];
-            std::regex rgxGetCode("^  (.*)$");
+            std::regex rgxGetCode("^    (.*)$");
             if (std::regex_search(blockLines[iLine], match, rgxGetCode)) {
                 pyCode = match[1];
                 //std::cerr << "Python code: '" << pyCode << "'" << std::endl;
@@ -67,7 +67,7 @@ void PyError::parseBlockContentError(std::vector<std::string> blockLines) {
                 //std::cerr << "Comportement inatendu: " << __FILE__ << " line " << __LINE__ << std::endl;
             }
         } else if (iLine == 2) {
-            std::regex rgxGetchar("  ( *)\\^");
+            std::regex rgxGetchar("    ( *)\\^");
             if (std::regex_search(blockLines[iLine], match, rgxGetchar)) {
                 charOfError = std::string(match[1]).size();
                 //std::cerr << "Char number: " << charOfError << std::endl;

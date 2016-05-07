@@ -1,4 +1,20 @@
-  File "py/in_python_code.py", line 3
-    print(5))
-            ^
-SyntaxError: invalid syntax
+Traceback (most recent call last):
+  File "py/in_python_code.py", line 17, in <module>
+    boucle(3)
+  File "py/in_python_code.py", line 14, in boucle
+    boucle(a-1)
+  File "py/in_python_code.py", line 14, in boucle
+    boucle(a-1)
+  File "py/in_python_code.py", line 14, in boucle
+    boucle(a-1)
+  File "py/in_python_code.py", line 16, in boucle
+    lancer(3)
+  File "/home/webalorn/Documents/informatique/projects/interpretePythonErrors/py/module.py", line 10, in lancer
+    lancer(a-1)
+  File "/home/webalorn/Documents/informatique/projects/interpretePythonErrors/py/module.py", line 10, in lancer
+    lancer(a-1)
+  File "/home/webalorn/Documents/informatique/projects/interpretePythonErrors/py/module.py", line 10, in lancer
+    lancer(a-1)
+  File "/home/webalorn/Documents/informatique/projects/interpretePythonErrors/py/module.py", line 8, in lancer
+    raise MyError(2*2)
+module.MyError: Probleme: 4

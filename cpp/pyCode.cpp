@@ -34,6 +34,9 @@ bool PyCode::isConditianal() {
 bool PyCode::endByTwoPoints() {
     return (*prev(lastChar)) == ':';
 }
+bool PyCode::contain(std::string occ) {
+    return line.find(occ) != std::string::npos;
+}
 
 int PyCode::countOpenCloseBrackets() {
     int difference = 0;

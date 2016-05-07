@@ -12,13 +12,15 @@ enum class frErr {
     conditionOneEqual, errorBrackets, previousErrorBrackets,
     plusGrandEgalInversion, plusPetitEgalInversion,
     guillemetsError, invalidSyntax,
+    pointVirguleFin, typeVariableDeclaration, // TODO : les 2!
+    nonAscii,
 
     // exeptions
     indentationErrorEmptyBlock, indentationErrorLevel, indentationError,
-    indexError,
-    KeyError,
-    ZeroDivisionError,
-    ImportError,
+    indexError, KeyError,
+    ZeroDivisionError, mathDomainError,
+    ImportError, EOFError,
+    valueErrorIntMappage, valueErrorInt, valueErrorIntInsteadOfFloat,
 
     undefinedVar,
     returnOutsideFct,

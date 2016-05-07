@@ -17,6 +17,7 @@ public:
     bool isStruct();
     bool isConditianal();
     bool endByTwoPoints();
+    bool contain(std::string);
     int countOpenCloseBrackets();
 };
 
