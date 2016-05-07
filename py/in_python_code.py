@@ -2,10 +2,11 @@
 from module import *
 from math import *
 
-# print(10 000*305 / 50)
+# a = 10 000*305 / 50
+# print 10 000*305 / 50
+# print(57*59*61*63*65)/(24*60*60)
 print 5
 
-print 5 + 3
 print("é")
 #n = int("54 -3")
 a_fe5 = 8

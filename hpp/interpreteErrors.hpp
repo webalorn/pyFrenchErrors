@@ -9,10 +9,10 @@
 enum class frErr {
     // invalid syntaxes
     deuxPointsIf, deuxPointsFor, deuxPointsWhile, deuxPointsElse, deuxPointsElif, deuxPointsDef,
-    conditionOneEqual, errorBrackets, previousErrorBrackets,
+    conditionOneEqual, errorBrackets, previousErrorBrackets, missingParentheses,
     plusGrandEgalInversion, plusPetitEgalInversion,
     guillemetsError, invalidSyntax,
-    pointVirguleFin, typeVariableDeclaration, // TODO : les 2!
+    pointVirguleFin, typeVariableDeclaration,
     nonAscii,
 
     // exeptions

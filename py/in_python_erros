@@ -1,4 +1,4 @@
-  File "py/in_python_code.py", line 6
+  File "py/in_python_code.py", line 8
     print 5
           ^
 SyntaxError: Missing parentheses in call to 'print'

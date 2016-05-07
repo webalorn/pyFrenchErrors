@@ -34,14 +34,16 @@ PyErrorMeaning::PyErrorMeaning(PyError error, std::vector<std::string> addedExce
             return frErr::pointVirguleFin;
         if (std::regex_match(code.getLine(), std::regex("\\s*(\\w)+\\s+(\\w)+\\s*=.*")))
             return frErr::typeVariableDeclaration;
-
-        if (code.isConditianal() && std::regex_match(code.getLine(), std::regex(".*[^=]=[^=].*"))) {
+        if (code.isConditianal() && std::regex_match(code.getLine(), std::regex(".*[^=]=[^=].*")))
             return frErr::conditionOneEqual;
-        }
         if (codeFile.getNbOpenBrackets(error.getLine()) > 0) {
             //paramsFr[0] = std::to_string(codeFile.getLineOpenFirstBracket(error.getLine()) + 1);
             realLineOfError = codeFile.getLineOpenFirstBracket(error.getLine());
             return frErr::previousErrorBrackets;
+        }
+        if (std::regex_search(errMessage, m, std::regex("^Missing parentheses in call to '(.*)'$"))) {
+            paramsFr[0] = m[1];
+            return frErr::missingParentheses;
         }
         if (code.countOpenCloseBrackets() != 0)
             return frErr::errorBrackets;
@@ -136,6 +138,7 @@ std::string PyErrorMeaning::frMeaning(frErr errorMessageId) {
         case frErr::conditionOneEqual: return "Pour écrire une égalitée dans une condition, on doit mettre un double égal, et donc écrire: a == b";
         case frErr::previousErrorBrackets:
         case frErr::errorBrackets: return "Tu dois avoir autant de parenthèses ouvrantes que fermetantes: tu peux écrire (a*(b+c)) mais PAS (a*(b+c) NI a*(b+c))";
+        case frErr::missingParentheses: return std::string("Tu dois mettre des parenthèses autour des paramètre d'une fonction pour l'appeler: tu ne dois pas écrire ") + paramsFr[0] + std::string(" [paramètres]  MAIS: ") + paramsFr[0] + std::string("([paramètres]) , en remplaçant [paramètres] par les paramètres de la fonction");
 
         case frErr::pointVirguleFin: return "En python, il n'y a pas besoin de mettre un point-virgule à la fin d'une instruction";
         case frErr::typeVariableDeclaration: return "En python, on n'a pas besoin de donner le type d'une variable lors de sa déclaration";
