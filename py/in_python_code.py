@@ -2,6 +2,9 @@
 from module import *
 from math import *
 
+# print(10 000*305 / 50)
+print 5
+
 print 5 + 3
 print("é")
 #n = int("54 -3")

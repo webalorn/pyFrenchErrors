@@ -18,7 +18,7 @@ std::vector<std::string> getFile(std::string fileName) {
 
 int main() {
     try {
-        system("python py/in_python_code.py 2> py/in_python_erros > /dev/null");
+        system("python3 py/in_python_code.py 2> py/in_python_erros > /dev/null");
         PyFile codeFile(getFile("py/in_python_code.py"));
         PyError pyErr(getFile("py/in_python_erros"));
         PyErrorMeaning meaning(pyErr, {"module.MyError"}, codeFile);
