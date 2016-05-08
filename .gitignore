@@ -2,3 +2,5 @@
 readErr
 obj/*.o
 *.pyc
+pyOut
+*.ghc

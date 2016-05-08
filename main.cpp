@@ -5,6 +5,9 @@
 #include <cstdlib>
 #include "pyCode.hpp"
 #include <vector>
+#include "json.hpp"
+
+using Json = nlohmann::json;
 
 std::vector<std::string> getFile(std::string fileName) {
     std::ifstream errorFile(fileName);
@@ -18,7 +21,7 @@ std::vector<std::string> getFile(std::string fileName) {
 
 int main() {
     try {
-        system("python3 py/in_python_code.py 2> py/in_python_erros > /dev/null");
+        system("python3 py/in_python_code.py 2> py/in_python_erros > pyOut");
         PyFile codeFile(getFile("py/in_python_code.py"));
         PyError pyErr(getFile("py/in_python_erros"));
         PyErrorMeaning meaning(pyErr, {"module.MyError"}, codeFile);
@@ -37,5 +40,6 @@ int main() {
     } catch (std::string e) {
         std::cout << e << std::endl;
     }
+
     return 0;
 }

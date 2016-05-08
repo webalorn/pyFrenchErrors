@@ -1,11 +1,29 @@
 # coding=utf-8
 from module import *
 from math import *
+import sys
 
-# a = 10 000*305 / 50
-# print 10 000*305 / 50
-# print(57*59*61*63*65)/(24*60*60)
-print 5
+print(sys.version_info[0])
+
+def f1():
+    return 1
+def f2(a):
+    return 2
+def f3(a, b):
+    return 3
+def f4(a, b, c, d, e, f):
+    return 4
+# f1(6)
+# f2()
+# f3()
+# f3(4, 5, 6)
+# f3(4, 5, 6, 3)
+# f4(5)
+f1(5, 6, 7, 8)
+
+n = "5"
+for i in range(n):
+    print(i)
 
 print("é")
 #n = int("54 -3")

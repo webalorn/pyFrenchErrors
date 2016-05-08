@@ -1,9 +1,7 @@
 CC=g++
-CFLAGS=-c -Wall -std=c++14 -pedantic -Wpedantic -Ihpp/
+CFLAGS=-c -Wall -std=c++14 -pedantic -Wpedantic -Ihpp/ -IjsonParser/src/
 LDFLAGS=
-# FILES=$(wildcard cpp/*.cpp)
-# FILES=main.cpp interpreteErrors.cpp parseErrorOutput.cpp pyCode.cpp pyFile.cpp
-# SOURCES=$(addprefix cpp/, $(FILES))
+
 SOURCES=$(wildcard cpp/*.cpp)
 OBJECTS=$(SOURCES:cpp/%.cpp=obj/%.o)
 EXECUTABLE=readErr
