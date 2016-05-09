@@ -9,14 +9,14 @@
 class PyError {
 public:
     PyError(std::vector<std::string>);
-    int getLine();
+    int getLineNumber();
     int getChar();
     std::string getType();
     std::string getMessage();
-    PyCode getCode();
+    PyLine getPyLine();
 private:
     std::string typeOfError, detailedMessage, pyCode;
-    int lineOfError; // from 1 to...
+    int lineOfError; // from 0 to...
     int charOfError; // from 0 to...
 
     void parseErrorLastLine(std::string);

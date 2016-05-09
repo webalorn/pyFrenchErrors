@@ -3,16 +3,17 @@
 
 #include <string>
 
-class PyCode {
+class PyLine {
 private:
     std::string::iterator firstChar, lastChar;
     std::string line;
 
 public:
-    PyCode(std::string); // do not strip, but set first and last non-empty char
+    PyLine(std::string); // do not strip, but set first and last non-empty char
+    operator std::string() { return get(); }
 
     std::string getFirstWord();
-    std::string getLine();
+    std::string get();
 
     bool isStruct();
     bool isConditianal();
