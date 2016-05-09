@@ -1,4 +1,4 @@
-{
+{"fr":{
 "deuxPointsIf": "Une condition 'if' doit se terminer par les deux poiint ':' comme ceci -> 'if a < b:'",
 "deuxPointsElse": "Une condition 'else' doit se terminer par les deux points ':' comme ceci -> 'else:'",
 "deuxPointsElif": "Une condition 'elif' doit se terminer par les deux points ':' comme ceci -> 'else if b < c:'",
@@ -39,5 +39,4 @@
 "returnOutsideFct": "L'instruction 'return' doit se trouver dans une fonction. Elle termine la fonction et indique ce qu'elle retourne.",
 
 "custom": "{{0}}",
-"undefined:,
-}
+}}

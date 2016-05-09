@@ -1,11 +1,13 @@
 #include <iostream>
-#include "parseErrorOutput.hpp"
-#include "interpreteErrors.hpp"
 #include <fstream>
 #include <cstdlib>
-#include "pyCode.hpp"
 #include <vector>
 #include "json.hpp"
+
+#include "pyError.hpp"
+#include "pyErrorMeaningTree.hpp"
+#include "tradErrorMessages.hpp"
+#include "pyFile.hpp"
 
 using Json = nlohmann::json;
 
@@ -21,22 +23,40 @@ std::vector<std::string> getFile(std::string fileName) {
 
 int main() {
     try {
+        /*
+            Construction des objets persistants (indépendants du cas)
+        */
+        PyErrorMeaningTree meaningTree(std::ifstream("data/pyErrorMeaningTree.json"));
+        TradErrorMessages traductions(std::ifstream("data/errorMessageTranslate.json"));
+
+        /*
+            Éxecution du code python, récupération du code et de la sortie
+        */
         system("python3 py/in_python_code.py 2> py/in_python_erros > pyOut");
         PyFile codeFile(getFile("py/in_python_code.py"));
         PyError pyErr(getFile("py/in_python_erros"));
-        PyErrorMeaning meaning(pyErr, {"module.MyError"}, codeFile);
 
+        /*
+            Inteprétation du messages
+        *//*
+        std::string langage = "fr";
+        auto meaning = meaningTree.getMeaningMessages(pyErr, codeFile);
+        int realErrorLineNumber = meaning.second;
+        std::string realErrorMessage = traductions.getMessage(meaning.first, langage);
 
-        std::cout << "-> Une erreure s'est produite à la ligne " << meaning.getRealErrorLine() + 1 /* +1: for humans */ << " de ton code" << std::endl;
-        std::cout << "Tu as écrit le code: " << std::endl << codeFile.getLine(meaning.getRealErrorLine()) << std::endl << std::endl;
+        *//*
+            Affichage
+        *//*
+        std::cout << "-> Une erreure s'est produite à la ligne " << realErrorLineNumber + 1  << " de ton code" << std::endl;
+        std::cout << "Tu as écrit le code: " << std::endl << codeFile.getLine(realErrorLineNumber).get() << std::endl << std::endl;
 
-        if (meaning.knowWhatErrorIs()) {
+        if (realErrorMessage != "") {
             std::cout << "-> Voici le problème: " << std::endl;
-            std::cout << meaning.getFrenchErrorMessage() << std::endl;
+            std::cout << realErrorMessage << std::endl;
         } else {
             std::cout << "Nous ne savons pas te dire ce qui est faux. Cependant, voici ce que PYTHON a affiché:" << std::endl;
             std::cout << pyErr.getType() << ": " << pyErr.getMessage() << std::endl;
-        }
+        }*/
     } catch (std::string e) {
         std::cout << e << std::endl;
     }

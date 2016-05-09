@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <string>
-#include "pyCode.hpp"
+#include "pyLine.hpp"
 #include "pyFile.hpp"
 
 class PyError {
@@ -15,7 +15,7 @@ public:
     std::string getMessage();
     PyLine getPyLine();
 private:
-    std::string typeOfError, detailedMessage, pyCode;
+    std::string typeOfError, detailedMessage, pyLine;
     int lineOfError; // from 0 to...
     int charOfError; // from 0 to...
 

@@ -10,7 +10,6 @@ private:
 
 public:
     PyLine(std::string); // do not strip, but set first and last non-empty char
-    operator std::string() { return get(); }
 
     std::string getFirstWord();
     std::string get();

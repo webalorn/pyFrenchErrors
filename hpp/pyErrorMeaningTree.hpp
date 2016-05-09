@@ -1,23 +1,22 @@
 #ifndef PY_ERROR_MEANING_TREE
 #define PY_ERROR_MEANING_TREE
 
-#include <ifstream>
+#include <fstream>
 #include <vector>
 #include <string>
 #include <utility>
 #include <regex>
 #include "json.hpp"
-#include "PyError.hpp"
-#include "PyFile.hpp"
+#include "pyError.hpp"
+#include "pyFile.hpp"
 
 class PyErrorMeaningTree {
 private:
     nlohmann::json tree;
-    int realErrorLineNumber;
 public:
-    PyErrorMeaningTree(std::ifstream::ifstream);
-    vector<std::pair<std::string, std::vector<std::string>>> getMeaningMessages(PyError, PyFile);
-    int getRealErrorLineNumber();
+    PyErrorMeaningTree(std::ifstream);
+    //            vector de paires: message, paramètres                    +realLineNumber
+    std::pair<std::vector<std::pair<std::string, std::vector<std::string>>>, int> getMeaningMessages(PyError, PyFile);
 };
 
 #endif

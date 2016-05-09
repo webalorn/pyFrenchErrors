@@ -1,4 +1,4 @@
-#include "parseErrorOutput.hpp"
+#include "pyError.hpp"
 #include <string>
 #include <vector>
 #include <algorithm>
@@ -57,11 +57,11 @@ void PyError::parseBlockContentError(std::vector<std::string> blockLines) {
                 //std::cerr << "Comportement inatendu: " << __FILE__ << " line " << __LINE__ << std::endl;
             }
         } else if (iLine == 1) {
-            pyCode = blockLines[iLine];
+            pyLine = blockLines[iLine];
             std::regex rgxGetCode("^    (.*)$");
             if (std::regex_search(blockLines[iLine], match, rgxGetCode)) {
-                pyCode = match[1];
-                //std::cerr << "Python code: '" << pyCode << "'" << std::endl;
+                pyLine = match[1];
+                //std::cerr << "Python code: '" << pyLine << "'" << std::endl;
             } else {
                 // TODO: exception
                 //std::cerr << "Comportement inatendu: " << __FILE__ << " line " << __LINE__ << std::endl;
@@ -81,7 +81,7 @@ void PyError::parseBlockContentError(std::vector<std::string> blockLines) {
     }
 }
 
-int PyError::getLine(){
+int PyError::getLineNumber(){
     return lineOfError;
 }
 int PyError::getChar(){
@@ -93,6 +93,6 @@ std::string PyError::getType(){
 std::string PyError::getMessage(){
     return detailedMessage;
 }
-PyCode PyError::getCode(){
-    return PyCode(pyCode);
+PyLine PyError::getPyLine(){
+    return PyLine(pyLine);
 }
