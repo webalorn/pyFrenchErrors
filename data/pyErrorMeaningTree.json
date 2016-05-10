@@ -12,12 +12,10 @@
         "typeError": "undefinedVar",
         "params": ["msg[1]"]
     },
-    ".*": "undefined"
 },
 "IndexError": "indexError",
 "KeyError": "KeyError",
 "ZeroDivisionError": "ZeroDivisionError",
 "ImportError": "ImportError",
 "EOFError": "EOFError",
-".*": "undefined"
 }

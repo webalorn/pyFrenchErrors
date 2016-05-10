@@ -38,5 +38,5 @@
 "undefinedVar": "La variable (ou la fonction) {{0}} n'existe pas, ou pas encore, à cet endroit. Vérifie que tu ne t'es pas trompé dans le nom ! Si c'est toi qui l'a créée, vérifie que tu le fait AVANT. Sinon, vérifie que le module et bien importé.",
 "returnOutsideFct": "L'instruction 'return' doit se trouver dans une fonction. Elle termine la fonction et indique ce qu'elle retourne.",
 
-"custom": "{{0}}",
+"custom": "{{0}}"
 }}

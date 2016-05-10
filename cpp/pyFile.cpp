@@ -2,7 +2,8 @@
 #include <iostream>
 
 PyFile::PyFile(std::vector<std::string> lines) {
-    linesCode = lines;
+    for (std::string l : lines)
+        linesCode.push_back(l);
     //std::cerr << "---------- CONSTRUCT PYFILE"<< std::endl;
     nbOpenBracketsLine = std::vector<int>(lines.size(), 0);
     // Parsing
@@ -43,8 +44,8 @@ int PyFile::getLineOpenFirstBracket(int iLine) {
     return iLine;
 }
 
-std::string PyFile::getLine(int iLine) {
+PyLine PyFile::getLine(int iLine) {
     if (iLine < 0 || iLine >= (int)linesCode.size())
-        return "--- Error: line inexistante ---";
+        return PyLine("--- Error: line inexistante ---");
     return linesCode[iLine];
 }

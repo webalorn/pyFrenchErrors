@@ -6,14 +6,16 @@
 #include <string>
 #include <vector>
 #include <utility>
+#include "json.hpp"
+#include "usefulStructs.hpp"
 
 class TradErrorMessages {
 private:
     std::map<std::string, std::map<std::string, std::string>> messages;
 public:
     TradErrorMessages(std::ifstream);
-    std::string getMessage(std::pair<std::string, std::vector<std::string>> messageWithParams, std::string langage);
-    std::string getMessage(std::vector<std::pair<std::string, std::vector<std::string>>> messageWithParamsTab, std::string langage);
+    std::string getMessage(errorMsgParams messageWithParams, std::string langage);
+    std::string getMessage(std::vector<errorMsgParams> messageWithParamsTab, std::string langage);
 };
 
 #endif

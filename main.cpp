@@ -35,13 +35,14 @@ int main() {
         system("python3 py/in_python_code.py 2> py/in_python_erros > pyOut");
         PyFile codeFile(getFile("py/in_python_code.py"));
         PyError pyErr(getFile("py/in_python_erros"));
-
         /*
             Inteprétation du messages
-        *//*
+        */
         std::string langage = "fr";
-        auto meaning = meaningTree.getMeaningMessages(pyErr, codeFile);
-        int realErrorLineNumber = meaning.second;
+        errorDescription meaning = meaningTree.getMeaningMessages(pyErr, codeFile);
+        
+
+        /*int realErrorLineNumber = meaning.second;
         std::string realErrorMessage = traductions.getMessage(meaning.first, langage);
 
         *//*
@@ -60,6 +61,5 @@ int main() {
     } catch (std::string e) {
         std::cout << e << std::endl;
     }
-
     return 0;
 }

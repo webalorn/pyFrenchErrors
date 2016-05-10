@@ -9,14 +9,16 @@
 #include "json.hpp"
 #include "pyError.hpp"
 #include "pyFile.hpp"
+#include "usefulStructs.hpp"
 
 class PyErrorMeaningTree {
 private:
     nlohmann::json tree;
+    errorDescription getMeaningDfs(PyError&, PyFile&, nlohmann::json&);
 public:
     PyErrorMeaningTree(std::ifstream);
     //            vector de paires: message, paramètres                    +realLineNumber
-    std::pair<std::vector<std::pair<std::string, std::vector<std::string>>>, int> getMeaningMessages(PyError, PyFile);
+    errorDescription getMeaningMessages(PyError&, PyFile&);
 };
 
 #endif

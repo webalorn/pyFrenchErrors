@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include "pyLine.hpp"
 
 class PyFile {
 public:
