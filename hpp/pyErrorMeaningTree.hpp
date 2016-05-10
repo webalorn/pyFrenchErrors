@@ -17,8 +17,8 @@
 class PyErrorMeaningTree {
 private:
     nlohmann::json tree;
-    std::map<std::string, std::functional<bool(FctContext)>> boolFcts;
-    //std::map<std::string, std::functional<std::string(FctContext)>> getFcts;
+    std::map<std::string, std::function<bool(FctContext)>> boolFcts;
+    //std::map<std::string, std::function<std::string(FctContext)>> getFcts;
 
     errorDescription getMeaningDfs(PyError&, PyFile&, nlohmann::json&);
     errorDescription dfsConditionNode(PyError&, PyFile&, nlohmann::json&);

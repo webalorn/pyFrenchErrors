@@ -34,21 +34,22 @@ errorDescription PyErrorMeaningTree::getMeaningDfs(PyError& pyError, PyFile& pyC
             if (typeOfNode == "errorCodeLine")
                 return dfsRegexNode(pyError, pyCodeFile, node, pyError.getPyLine().get()); // TODO (cf above)
         }
-        if (node.find("typeError")) {
+        if (node.find("typeError") != node.end()) {
             return dfsReturnTypeNode(pyError, pyCodeFile, node); // TODO new function
         }
 
     } else if (node.is_array()) {
-        for (json::iterator it = node.begin(); it != node.end() && !errMessages.isDefined(); ++it) {
+        for (nlohmann::json::iterator it = node.begin(); it != node.end() && !errMessages.isDefined(); ++it) {
             errMessages = getMeaningDfs(pyError, pyCodeFile, *it);
         }
     } else if (node.is_string()) {
-        errMessages.messages.push_back(std::string(node), {});
+        const std::string typeError = node;
+        errMessages.messages.push_back({typeError, {}});
     }
     return errMessages;
 }
 
-bool useBoolFct(std::string name, FctContext context) {
+bool PyErrorMeaningTree::useBoolFct(std::string name, FctContext context) {
     if (boolFcts.find(name) == boolFcts.end())
         return false;
     return boolFcts[name](context);
@@ -59,13 +60,17 @@ bool useBoolFct(std::string name, FctContext context) {
     return getFcts[name](context);
 }*/
 
-errorDescription dfsConditionNode(PyError& pyError, PyFile& pyCodeFile, nlohmann::json& node) {
+errorDescription PyErrorMeaningTree::dfsConditionNode(PyError& pyError, PyFile& pyCodeFile, nlohmann::json& node) {
     FctContext context = {{}, pyError, pyCodeFile};
-    if (node.find("params") != node.end())
-        context.params = node["params"];
-    if (node.find("block") != node.end() && useBoolFct(node["condition"], context)) {
-        getMeaningDfs(pyError, pyCodeFile, node["block"])
+    if (node.find("params") != node.end()) {
+        //context.params = node["params"];
+        for (std::string p : node["params"]) {
+            context.params.push_back(p);
+        }
+    } if (node.find("block") != node.end() && useBoolFct(node["condition"], context)) {
+        return getMeaningDfs(pyError, pyCodeFile, node["block"]);
     }
+    return {pyError.getLineNumber(), {}};
 }
 //TODO: errorDescription dfsRegexNode(PyError& pyError, PyFile& pyCodeFile, nlohmann::json& node, std::string regexApplyTo);
 //TODO: errorDescription dfsReturnTypeNode(PyError& pyError, PyFile& pyCodeFile, nlohmann::json& node);

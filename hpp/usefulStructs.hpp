@@ -2,6 +2,8 @@
 #define USEFUL_STRUCTS
 
 #include <string>
+#include <vector>
+
 class PyError;
 class PyFile;
 
