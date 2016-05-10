@@ -19,26 +19,27 @@ errorDescription PyErrorMeaningTree::getMeaningMessages(PyError& pyError, PyFile
 }
 
 errorDescription PyErrorMeaningTree::getMeaningDfs(PyError& pyError, PyFile& pyCodeFile, nlohmann::json& node) {
+    //std::cerr << "---> getMeaningDfs" << std::endl;
     errorDescription errMessages = {pyError.getLineNumber(), {}};
 
     if (node.is_object()) {
 
         // traitement selon le type
         if (node.find("condition") != node.end())
-            return dfsConditionNode(pyError, pyCodeFile, node); // TODO new function
+            return dfsConditionNode(pyError, pyCodeFile, node);
 
         if (node.find("type") != node.end()) {
             std::string typeOfNode = node["type"];
 
             if (typeOfNode == "errorMessage")
-                return dfsRegexNode(pyError, pyCodeFile, node, pyError.getMessage()); // TODO new function
+                return dfsRegexNode(pyError, pyCodeFile, node, pyError.getMessage());
             if (typeOfNode == "errorType")
-                return dfsRegexNode(pyError, pyCodeFile, node, pyError.getType()); // TODO (cf above)
+                return dfsRegexNode(pyError, pyCodeFile, node, pyError.getType());
             if (typeOfNode == "errorCodeLine")
-                return dfsRegexNode(pyError, pyCodeFile, node, pyError.getPyLine().get()); // TODO (cf above)
+                return dfsRegexNode(pyError, pyCodeFile, node, pyError.getPyLine().get());
         }
         if (node.find("typeError") != node.end()) {
-            return dfsReturnTypeNode(pyError, pyCodeFile, node); // TODO new function
+            return dfsReturnTypeNode(pyError, pyCodeFile, node);
         }
 
     } else if (node.is_array()) {
@@ -64,6 +65,7 @@ bool PyErrorMeaningTree::useBoolFct(std::string name, FctContext context) {
 }*/
 
 errorDescription PyErrorMeaningTree::dfsConditionNode(PyError& pyError, PyFile& pyCodeFile, nlohmann::json& node) {
+    //std::cerr << "---> dfsConditionNode" << std::endl;
     FctContext context = {{}, pyError, pyCodeFile};
     if (node.find("params") != node.end()) {
         //context.params = node["params"];
@@ -76,6 +78,7 @@ errorDescription PyErrorMeaningTree::dfsConditionNode(PyError& pyError, PyFile& 
     return {pyError.getLineNumber(), {}};
 }
 errorDescription PyErrorMeaningTree::dfsRegexNode(PyError& pyError, PyFile& pyCodeFile, nlohmann::json& node, std::string regexApplyTo) {
+    //std::cerr << "---> dfsRegexNode sur: " << regexApplyTo << std::endl;
     std::smatch match;
     std::string varName = "";
     errorDescription errMessages = {pyError.getLineNumber(), {}};
@@ -87,18 +90,21 @@ errorDescription PyErrorMeaningTree::dfsRegexNode(PyError& pyError, PyFile& pyCo
             if (it.key() == "type" || it.key() == "var")
                 continue;
             std::regex regexOfNode = std::regex(it.key());
+            //std::cerr << "Test match with " << it.key() << std::endl;
             if (std::regex_match(regexApplyTo, regexOfNode) && std::regex_search(regexApplyTo, match, regexOfNode)) {
+                //std::cerr << "TRUE" << std::endl;
                 regexExtracts[varName] = match;
                 errMessages = getMeaningDfs(pyError, pyCodeFile, *it);
             }
         }
-        regexExtracts.erase(regexExtracts.find(varName));
+        if (regexExtracts.find(varName) != regexExtracts.end())
+            regexExtracts.erase(regexExtracts.find(varName));
     } catch (const std::invalid_argument& ia) {
-        std::cerr << "Invalid argument: " << ia.what() << '\n';
     }
     return errMessages;
 }
 errorDescription PyErrorMeaningTree::dfsReturnTypeNode(PyError& pyError, PyFile& pyCodeFile, nlohmann::json& node) {
+    std::cerr << "---> dfsReturnTypeNode" << std::endl;
     errorDescription errMessages = {pyError.getLineNumber(), {}};
 
     //TODO

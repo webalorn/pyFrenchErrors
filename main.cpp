@@ -41,6 +41,10 @@ int main() {
         std::string langage = "fr";
         errorDescription meaning = meaningTree.getMeaningMessages(pyErr, codeFile);
 
+        std::cerr << "============== ERROR:" << std::endl;
+        for (auto s : meaning.messages) {
+            std::cerr << s.messageId << std::endl;
+        }
 
         /*int realErrorLineNumber = meaning.second;
         std::string realErrorMessage = traductions.getMessage(meaning.first, langage);

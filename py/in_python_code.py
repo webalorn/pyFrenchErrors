@@ -1,5 +1,7 @@
 # coding=utf-8
-from module import *
+print(a)
+print()
+"""from module import *
 from math import *
 import sys
 
@@ -37,3 +39,4 @@ def boucle(a):
     else:
         lancer(3)
 boucle(3)
+"""

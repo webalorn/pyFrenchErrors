@@ -9,7 +9,7 @@ class PyFile;
 
 
 struct errorMsgParams {
-    std::string mesageId;
+    std::string messageId;
     std::vector<std::string> params;
 };
 
