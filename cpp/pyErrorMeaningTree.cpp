@@ -2,7 +2,11 @@
 #include <iostream>
 
 PyErrorMeaningTree::PyErrorMeaningTree (std::ifstream dataFile) {
-    dataFile >> tree;
+    try {
+        dataFile >> tree;
+    } catch (const std::invalid_argument& ia) {
+        std::cerr << "Construction PyErrorMeaningTree: " << ia.what() << '\n';
+    }
     /*for (nlohmann::json::iterator it = tree.begin(); it != tree.end(); ++it) {
         std::cout << it.key() << " : " << it.value() << std::endl;
     }*/
@@ -11,7 +15,6 @@ PyErrorMeaningTree::PyErrorMeaningTree (std::ifstream dataFile) {
 
 errorDescription PyErrorMeaningTree::getMeaningMessages(PyError& pyError, PyFile& pyCodeFile) {
     errorDescription err = getMeaningDfs(pyError, pyCodeFile, tree);
-    // TODO: clean the structure
     return err;
 }
 
@@ -72,5 +75,33 @@ errorDescription PyErrorMeaningTree::dfsConditionNode(PyError& pyError, PyFile& 
     }
     return {pyError.getLineNumber(), {}};
 }
-//TODO: errorDescription dfsRegexNode(PyError& pyError, PyFile& pyCodeFile, nlohmann::json& node, std::string regexApplyTo);
-//TODO: errorDescription dfsReturnTypeNode(PyError& pyError, PyFile& pyCodeFile, nlohmann::json& node);
+errorDescription PyErrorMeaningTree::dfsRegexNode(PyError& pyError, PyFile& pyCodeFile, nlohmann::json& node, std::string regexApplyTo) {
+    std::smatch match;
+    std::string varName = "";
+    errorDescription errMessages = {pyError.getLineNumber(), {}};
+    try {
+
+        if (node.find("var") != node.end())
+            varName = node["var"];
+        for (nlohmann::json::iterator it = node.begin(); it != node.end() && !errMessages.isDefined(); ++it) {
+            if (it.key() == "type" || it.key() == "var")
+                continue;
+            std::regex regexOfNode = std::regex(it.key());
+            if (std::regex_match(regexApplyTo, regexOfNode) && std::regex_search(regexApplyTo, match, regexOfNode)) {
+                regexExtracts[varName] = match;
+                errMessages = getMeaningDfs(pyError, pyCodeFile, *it);
+            }
+        }
+        regexExtracts.erase(regexExtracts.find(varName));
+    } catch (const std::invalid_argument& ia) {
+        std::cerr << "Invalid argument: " << ia.what() << '\n';
+    }
+    return errMessages;
+}
+errorDescription PyErrorMeaningTree::dfsReturnTypeNode(PyError& pyError, PyFile& pyCodeFile, nlohmann::json& node) {
+    errorDescription errMessages = {pyError.getLineNumber(), {}};
+
+    //TODO
+
+    return errMessages;
+}

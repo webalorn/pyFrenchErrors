@@ -40,7 +40,7 @@ int main() {
         */
         std::string langage = "fr";
         errorDescription meaning = meaningTree.getMeaningMessages(pyErr, codeFile);
-        
+
 
         /*int realErrorLineNumber = meaning.second;
         std::string realErrorMessage = traductions.getMessage(meaning.first, langage);
@@ -60,6 +60,8 @@ int main() {
         }*/
     } catch (std::string e) {
         std::cout << e << std::endl;
+    } catch (const std::invalid_argument& ia) {
+        std::cerr << "Invalid argument: " << ia.what() << '\n';
     }
     return 0;
 }

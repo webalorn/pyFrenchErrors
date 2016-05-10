@@ -18,6 +18,7 @@ class PyErrorMeaningTree {
 private:
     nlohmann::json tree;
     std::map<std::string, std::function<bool(FctContext)>> boolFcts;
+    std::map<std::string, std::smatch> regexExtracts;
     //std::map<std::string, std::function<std::string(FctContext)>> getFcts;
 
     errorDescription getMeaningDfs(PyError&, PyFile&, nlohmann::json&);

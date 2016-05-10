@@ -11,11 +11,11 @@
     "name '(.*)' is not defined": {
         "typeError": "undefinedVar",
         "params": ["msg[1]"]
-    },
+    }
 },
 "IndexError": "indexError",
 "KeyError": "KeyError",
 "ZeroDivisionError": "ZeroDivisionError",
 "ImportError": "ImportError",
-"EOFError": "EOFError",
+"EOFError": "EOFError"
 }
