@@ -43,7 +43,11 @@ int main() {
 
         std::cerr << "============== ERROR:" << std::endl;
         for (auto s : meaning.messages) {
-            std::cerr << s.messageId << std::endl;
+            std::cerr << s.messageId;
+            for (std::string p : s.params) {
+                std::cerr << " '" << p << "'";
+            }
+            std::cerr << std::endl;
         }
 
         /*int realErrorLineNumber = meaning.second;

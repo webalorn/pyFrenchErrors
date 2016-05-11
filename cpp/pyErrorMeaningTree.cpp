@@ -58,11 +58,11 @@ bool PyErrorMeaningTree::useBoolFct(std::string name, FctContext context) {
         return false;
     return boolFcts[name](context);
 }
-/*std::string getReturnFct(std::string name, FctContext context) {
+std::string PyErrorMeaningTree::getReturnFct(std::string name, FctContext context) {
     if (getFcts.find(name) == getFcts.end())
         return "";
     return getFcts[name](context);
-}*/
+}
 
 errorDescription PyErrorMeaningTree::dfsConditionNode(PyError& pyError, PyFile& pyCodeFile, nlohmann::json& node) {
     //std::cerr << "---> dfsConditionNode" << std::endl;
@@ -108,6 +108,41 @@ errorDescription PyErrorMeaningTree::dfsReturnTypeNode(PyError& pyError, PyFile&
     errorDescription errMessages = {pyError.getLineNumber(), {}};
 
     //TODO
+    if (node.find("realErrorLine") != node.end()) {
+        std::string realErrorLineStr = node["realErrorLine"];
+        errMessages.errLine =  stoi(realErrorLineStr);
+    }
+    errorMsgParams addMsg;
+    addMsg.messageId = node["typeError"];
+    if (node.find("params") != node.end()) {
+        for (std::string paramVal : node["params"]) {
+            addMsg.params.push_back(evaluateParamVal(paramVal, {{}, pyError, pyCodeFile}));
+        }
+    }
+    errMessages.messages.push_back(addMsg);
+
+    if (node.find("concatenate") != node.end()) {
+        for (auto otherTree : node["concatenate"]) {
+            errMessages.push(getMeaningDfs(pyError, pyCodeFile, otherTree));
+        }
+    }
 
     return errMessages;
+}
+
+std::string PyErrorMeaningTree::evaluateParamVal(std::string paramVal, FctContext context) {
+    std::smatch match;
+    //std::cerr << "évalutate param: " << paramVal << std::endl;
+    if (std::regex_search(paramVal, match, std::regex("^(.*)\\((.*)\\)$"))) {
+        //std::cerr << "is a function" << std::endl;
+        context.params.push_back(match[2]);
+        return getReturnFct(match[1], context);
+    }
+    if (std::regex_search(paramVal, match, std::regex("^(.*)\\[([[:digit:]]*)\\]$"))) {
+        //std::cerr << "tab access" << std::endl;
+        int id = stoi(match[2]);
+        if (regexExtracts.find(match[1]) != regexExtracts.end())
+            return regexExtracts[match[1]][id];
+    }
+    return "";
 }

@@ -19,7 +19,9 @@ private:
     nlohmann::json tree;
     std::map<std::string, std::function<bool(FctContext)>> boolFcts;
     std::map<std::string, std::smatch> regexExtracts;
-    //std::map<std::string, std::function<std::string(FctContext)>> getFcts;
+    std::map<std::string, std::function<std::string(FctContext)>> getFcts;
+
+    std::string evaluateParamVal(std::string, FctContext);
 
     errorDescription getMeaningDfs(PyError&, PyFile&, nlohmann::json&);
     errorDescription dfsConditionNode(PyError&, PyFile&, nlohmann::json&);
@@ -27,7 +29,7 @@ private:
     errorDescription dfsReturnTypeNode(PyError&, PyFile&, nlohmann::json&);
 
     bool useBoolFct(std::string, FctContext);
-    //std::string getReturnFct(std::string, FctContext);
+    std::string getReturnFct(std::string, FctContext);
 public:
     PyErrorMeaningTree(std::ifstream);
     //            vector de paires: message, paramètres                    +realLineNumber
