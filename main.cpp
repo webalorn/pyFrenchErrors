@@ -50,12 +50,10 @@ int main() {
             std::cerr << std::endl;
         }
 
-        /*int realErrorLineNumber = meaning.second;
-        std::string realErrorMessage = traductions.getMessage(meaning.first, langage);
+        int realErrorLineNumber = meaning.errLine;
+        std::string realErrorMessage = traductions.getMessage(meaning.messages, langage);
 
-        *//*
-            Affichage
-        *//*
+
         std::cout << "-> Une erreure s'est produite à la ligne " << realErrorLineNumber + 1  << " de ton code" << std::endl;
         std::cout << "Tu as écrit le code: " << std::endl << codeFile.getLine(realErrorLineNumber).get() << std::endl << std::endl;
 
@@ -65,7 +63,7 @@ int main() {
         } else {
             std::cout << "Nous ne savons pas te dire ce qui est faux. Cependant, voici ce que PYTHON a affiché:" << std::endl;
             std::cout << pyErr.getType() << ": " << pyErr.getMessage() << std::endl;
-        }*/
+        }
     } catch (std::string e) {
         std::cout << e << std::endl;
     } catch (const std::invalid_argument& ia) {

@@ -32,7 +32,6 @@ private:
     std::string getReturnFct(std::string, FctContext);
 public:
     PyErrorMeaningTree(std::ifstream);
-    //            vector de paires: message, paramètres                    +realLineNumber
     errorDescription getMeaningMessages(PyError&, PyFile&);
 };
 

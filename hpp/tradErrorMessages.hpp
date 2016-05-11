@@ -6,7 +6,9 @@
 #include <string>
 #include <vector>
 #include <utility>
+#include <regex>
 #include "json.hpp"
+
 #include "usefulStructs.hpp"
 
 class TradErrorMessages {
