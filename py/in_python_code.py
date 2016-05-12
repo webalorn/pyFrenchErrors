@@ -1,6 +1,6 @@
 # coding=utf-8
-print(abde)
-print()
+from math import *
+a = int("5.0 -3.3 2.5")
 """from module import *
 from math import *
 import sys

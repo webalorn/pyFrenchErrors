@@ -8,6 +8,7 @@
 #include "pyErrorMeaningTree.hpp"
 #include "tradErrorMessages.hpp"
 #include "pyFile.hpp"
+#include "utility.hpp"
 
 using Json = nlohmann::json;
 
@@ -29,6 +30,9 @@ int main() {
         PyErrorMeaningTree meaningTree(std::ifstream("data/pyErrorMeaningTree.json"));
         TradErrorMessages traductions(std::ifstream("data/errorMessageTranslate.json"));
 
+        //LogError::log("Simple erreur");
+        //LogError::logFatal("Erreur fatale");
+
         /*
             Éxecution du code python, récupération du code et de la sortie
         */
@@ -41,18 +45,12 @@ int main() {
         std::string langage = "fr";
         errorDescription meaning = meaningTree.getMeaningMessages(pyErr, codeFile);
 
-        std::cerr << "============== ERROR:" << std::endl;
-        for (auto s : meaning.messages) {
-            std::cerr << s.messageId;
-            for (std::string p : s.params) {
-                std::cerr << " '" << p << "'";
-            }
-            std::cerr << std::endl;
-        }
-
         int realErrorLineNumber = meaning.errLine;
         std::string realErrorMessage = traductions.getMessage(meaning.messages, langage);
 
+        /*
+            Affichage de la sortie
+        */
 
         std::cout << "-> Une erreure s'est produite à la ligne " << realErrorLineNumber + 1  << " de ton code" << std::endl;
         std::cout << "Tu as écrit le code: " << std::endl << codeFile.getLine(realErrorLineNumber).get() << std::endl << std::endl;

@@ -1,4 +1,4 @@
 Traceback (most recent call last):
-  File "py/in_python_code.py", line 2, in <module>
-    print(abde)
-NameError: name 'abde' is not defined
+  File "py/in_python_code.py", line 3, in <module>
+    a = int("5.0 -3.3 2.5")
+ValueError: invalid literal for int() with base 10: '5.0 -3.3 2.5'

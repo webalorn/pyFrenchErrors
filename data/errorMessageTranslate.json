@@ -27,7 +27,9 @@
 "indexError": "Tu accède à une case de la liste qui n'existe pas. Si tu utilise une variable, vérifie qu'elle ne peut pas être trop grande. Souviens toi que les cases d'une liste sont numérotées de 0 à TAILLE-1: dans une liste de taille 5, les cases -3, 5 et 6 n'existent PAS",
 "KeyError": "Tu accès à une CLÉE (une case) de ton dictionaire qui n'existe pas. Vérifie que ta clée existe bien !",
 "ZeroDivisionError": "Cette instruction effectue une division pas zero, ce qui est IMPOSSIBLE. Si tu utilise une variable, vérifie que le diviseur le vaut jamais 0",
-"mathDomainError": "Tu utilise un fonction mathématique en lui donnant un nombre qui est interdit ! [Ajouter concatenation]",
+"mathDomainError": "Tu utilise un fonction mathématique en lui donnant un nombre qui est interdit !",
+"mathDomainError_log" : "La fonction log (logarithme) prend en paramètre un nombre qui doit être STRICTEMENT SUPÉRIEUR à 0. ",
+"mathDomainError_sqrt":"La fonction sqrt (racine carrée) prend en paramètre un nombre qui doit être SUPÉRIEUR OU ÉGAL à 0. ",
 "ImportError": "Un fichier ou un module inexistant est importé. Vérifie bien son nom.",
 "EOFError": "Ton code à tenté de lire une ligne d'entrée, mais il n'y en avais pas ou plus ! A chaque fois que tu utilise input(), ton code lit une nouvelle ligne. Une erreure se produit quand plus aucune ligne n'a pas étée lue.",
 

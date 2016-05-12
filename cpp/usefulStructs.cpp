@@ -1,8 +1,9 @@
 #include "usefulStructs.hpp"
-
+#include <iostream>
 
 void errorDescription::push(errorDescription other) {
-    messages.insert(messages.begin(), other.messages.begin(), other.messages.end());
+    for (auto x : other.messages)
+        messages.push_back(x);
 }
 bool errorDescription::isDefined() {
     return !messages.empty();

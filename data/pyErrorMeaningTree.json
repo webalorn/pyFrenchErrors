@@ -1,9 +1,87 @@
 {
 "type": "errorType",
 
-"SyntaxError": "getSyntaxErrorId()",
-"IndentationError": "getIndentationError()",
-"ValueError": "getValueError()",
+"SyntaxError": {
+    "type": "errorMessage",
+    "var": "msg",
+
+    "EOL while scanning string literal": "guillemetsError",
+    "Non-ASCII character .* in file .* but no encoding declared; .*": "nonAscii",
+    "'return' outside function": "returnOutsideFct",
+    "^Missing parentheses in call to '(.*)'$": {
+        "typeError": "missingParentheses",
+        "params": ["msg[1]"]
+    },
+    ".*": [
+        {"condition": "codeFile.getNbOpenBrackets(error.getLine()) > 0 TODO",
+            "block": {
+                "typeError": "previousErrorBrackets",
+                "realErrorLine": "codeFile.getLineOpenFirstBracket(error.getLine()) TODO"
+            },
+            "else": {
+                "condition": "code.countOpenCloseBrackets() != 0 TODO",
+                "block": "errorBrackets"
+            }
+        },
+        {
+            "condition": "code.isConditianal() TODO",
+            "block": {
+                "type": "errorCodeLine",
+                ".*[^=]=[^=].*": "conditionOneEqual",
+                ".*=>.*": "plusGrandEgalInversion",
+                ".*=<.*": "plusPetitEgalInversion"
+            }
+        },
+        {
+            "type": "errorCodeLine",
+            ".*;[[:blank:]]*": "pointVirguleFin",
+            "\\s*(\\w)+\\s+(\\w)+\\s*=.*": "typeVariableDeclaration",
+        },
+        {
+            "condition": "!code.endByTwoPoints() TODO",
+            "block": {
+                "condition": "code.isStruct()",
+                "block": {
+                    "regexOn": "code.getFirstWord() TODO",
+                    "for":  "deuxPointsFor",
+                    "if":  "deuxPointsIf",
+                    "elif":  "deuxPointsElif",
+                    "else":  "deuxPointsElse",
+                    "def":  "deuxPointsDef",
+                    "while":  "deuxPointsWhil"
+                }
+            }
+        }
+    ],
+    "default": "invalidSyntax"
+},
+"IndentationError": {
+    "type": "errorMessage",
+    "expected an indented block": "indentationErrorEmptyBlock",
+    "unindent does not match any outer indentation level": "indentationErrorLevel",
+    "default": "indentationError"
+},
+"ValueError": {
+    "type": "errorMessage",
+    "var": "msg",
+
+    "math domain error": {
+        "typeError": "mathDomainError",
+        "concatenate": [{
+            "type": "errorCodeLine",
+            ".*log.*": "mathDomainError_log"
+        }, {
+            "type": "errorCodeLine",
+            ".*sqrt.*": "mathDomainError_sqrt"
+        }]
+    },
+    "invalid literal for int\\(\\) with base [[:digit:]]*: '(.*)'": {
+        "regexOn": "msg[1]",
+        "([[:blank:]]*-?[[:d:]]+[[:blank:]]*)+": "valueErrorIntMappage",
+        "[[:blank:]]*-?[[:d:]]+\\.[[:d:]]+[[:blank:]]*": "valueErrorIntInsteadOfFloat",
+        "default": "valueErrorInt"
+    }
+},
 "NameError": {
     "type": "errorMessage",
     "var": "msg",

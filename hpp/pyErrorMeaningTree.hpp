@@ -13,6 +13,7 @@
 #include "pyError.hpp"
 #include "pyFile.hpp"
 #include "usefulStructs.hpp"
+#include "utility.hpp"
 
 class PyErrorMeaningTree {
 private:

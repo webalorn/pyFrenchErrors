@@ -10,6 +10,7 @@
 #include "json.hpp"
 
 #include "usefulStructs.hpp"
+#include "utility.hpp"
 
 class TradErrorMessages {
 private:
