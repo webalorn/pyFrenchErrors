@@ -1,5 +1,6 @@
 #include "pyErrorMeaningTree.hpp"
 #include <iostream>
+#include "meaningTreeFcts.hpp"
 
 PyErrorMeaningTree::PyErrorMeaningTree (std::ifstream dataFile) {
     try {
@@ -7,7 +8,8 @@ PyErrorMeaningTree::PyErrorMeaningTree (std::ifstream dataFile) {
     } catch (const std::invalid_argument& ia) {
         LogError::logFatal("Construction PyErrorMeaningTree, fichier JSON invalide: " + std::string(ia.what()));
     }
-    // TODO: création des fonctions
+    boolFcts = getBoolTreeFcts();
+    getFcts = getStringTreeFcts();
 }
 
 errorDescription PyErrorMeaningTree::getMeaningMessages(PyError& pyError, PyFile& pyCodeFile) {
@@ -17,7 +19,7 @@ errorDescription PyErrorMeaningTree::getMeaningMessages(PyError& pyError, PyFile
 
 errorDescription PyErrorMeaningTree::getMeaningDfs(PyError& pyError, PyFile& pyCodeFile, nlohmann::json& node) {
     errorDescription errMessages = {pyError.getLineNumber(), {}};
-
+    //std::cerr << "PyErrorMeaningTree::getMeaningDfs" << node << std::endl;
     if (node.is_object()) {
 
         // traitement selon le type
@@ -55,8 +57,10 @@ errorDescription PyErrorMeaningTree::getMeaningDfs(PyError& pyError, PyFile& pyC
 }
 
 bool PyErrorMeaningTree::useBoolFct(std::string name, FctContext context) {
-    if (boolFcts.find(name) == boolFcts.end())
+    if (boolFcts.find(name) == boolFcts.end()) {
+        LogError::log("Fonction booléenne dans l'arbre meaning inconnue: "+name);
         return false;
+    }
     return boolFcts[name](context);
 }
 std::string PyErrorMeaningTree::getReturnFct(std::string name, FctContext context) {
@@ -68,14 +72,28 @@ std::string PyErrorMeaningTree::getReturnFct(std::string name, FctContext contex
 }
 
 errorDescription PyErrorMeaningTree::dfsConditionNode(PyError& pyError, PyFile& pyCodeFile, nlohmann::json& node) {
+    //std::cerr << "Conditional node: " << node["condition"] << std::endl;
     FctContext context = {{}, pyError, pyCodeFile};
     if (node.find("params") != node.end()) {
         //context.params = node["params"];
         for (std::string p : node["params"]) {
             context.params.push_back(p);
         }
-    } if (node.find("block") != node.end() && useBoolFct(node["condition"], context)) {
-        return getMeaningDfs(pyError, pyCodeFile, node["block"]);
+    } if (useBoolFct(node["condition"], context)) {
+        //std::cerr << "|-> TRUE" << std::endl;
+        if (node.find("block") != node.end()) {
+            //std::cerr << "block exist" << std::endl;
+            errorDescription e = getMeaningDfs(pyError, pyCodeFile, node["block"]);
+            //std::cerr << "isDefined-> " << std::boolalpha << e.isDefined() << std::endl;
+            if (e.isDefined()) {
+                //std::cerr << e.messages[0].messageId << std::endl;
+            }
+            return e;
+        }
+    } else {
+        //std::cerr << "|-> FALSE" << std::endl;
+        if (node.find("else") != node.end())
+            return getMeaningDfs(pyError, pyCodeFile, node["else"]);
     }
     return {pyError.getLineNumber(), {}};
 }
@@ -110,10 +128,13 @@ errorDescription PyErrorMeaningTree::dfsReturnTypeNode(PyError& pyError, PyFile&
     //std::cerr << "---> dfsReturnTypeNode" << std::endl;
     errorDescription errMessages = {pyError.getLineNumber(), {}};
 
-    //TODO
     if (node.find("realErrorLine") != node.end()) {
         std::string realErrorLineStr = node["realErrorLine"];
-        errMessages.errLine =  stoi(realErrorLineStr);
+        try {
+            errMessages.errLine =  stoi(evaluateParamVal(realErrorLineStr, {{}, pyError, pyCodeFile}));
+        } catch (std::invalid_argument e) {
+            LogError::log("PyErrorMeaningTree::dfsReturnTypeNode "+realErrorLineStr+" can't be evaluate as a number");
+        }
     }
     errorMsgParams addMsg;
     addMsg.messageId = node["typeError"];

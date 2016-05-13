@@ -8,7 +8,6 @@
 #include "pyErrorMeaningTree.hpp"
 #include "tradErrorMessages.hpp"
 #include "pyFile.hpp"
-#include "utility.hpp"
 
 using Json = nlohmann::json;
 
@@ -29,9 +28,6 @@ int main() {
         */
         PyErrorMeaningTree meaningTree(std::ifstream("data/pyErrorMeaningTree.json"));
         TradErrorMessages traductions(std::ifstream("data/errorMessageTranslate.json"));
-
-        //LogError::log("Simple erreur");
-        //LogError::logFatal("Erreur fatale");
 
         /*
             Éxecution du code python, récupération du code et de la sortie

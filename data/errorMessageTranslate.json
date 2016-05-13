@@ -7,7 +7,7 @@
 "deuxPointsDef": "Une définition de fonction 'def' doit se terminer par les deux points ':' comme ceci -> 'def maFonction():'",
 
 "conditionOneEqual": "Pour écrire une égalitée dans une condition, on doit mettre un double égal, et donc écrire: a == b",
-"((previousErrorBrackets)|(errorBrackets)": "Tu dois avoir autant de parenthèses ouvrantes que fermetantes: tu peux écrire (a*(b+c)) mais PAS (a*(b+c) NI a*(b+c))",
+"previousErrorBrackets|errorBrackets": "Tu dois avoir autant de parenthèses ouvrantes que fermetantes: tu peux écrire (a*(b+c)) mais PAS (a*(b+c) NI a*(b+c))",
 "missingParentheses": "Tu dois mettre des parenthèses autour des paramètre d'une fonction pour l'appeler: tu ne dois pas écrire {{0}} [paramètres]  MAIS: {{0}}([paramètres]) , en remplaçant [paramètres] par les paramètres de la fonction",
 
 "pointVirguleFin": "En python, il n'y a pas besoin de mettre un point-virgule à la fin d'une instruction",

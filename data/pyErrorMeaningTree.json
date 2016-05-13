@@ -13,21 +13,22 @@
         "params": ["msg[1]"]
     },
     ".*": [
-        {"condition": "codeFile.getNbOpenBrackets(error.getLine()) > 0 TODO",
+        {
+            "condition": "errorLine_openBracket > 0",
             "block": {
                 "typeError": "previousErrorBrackets",
-                "realErrorLine": "codeFile.getLineOpenFirstBracket(error.getLine()) TODO"
+                "realErrorLine": "getLineFirstBracketOfError()"
             },
             "else": {
-                "condition": "code.countOpenCloseBrackets() != 0 TODO",
+                "condition": "code.countOpenCloseBrackets != 0",
                 "block": "errorBrackets"
             }
         },
         {
-            "condition": "code.isConditianal() TODO",
+            "condition": "code.isConditianal",
             "block": {
                 "type": "errorCodeLine",
-                ".*[^=]=[^=].*": "conditionOneEqual",
+                ".*[^=<>]=[^=<>].*": "conditionOneEqual",
                 ".*=>.*": "plusGrandEgalInversion",
                 ".*=<.*": "plusPetitEgalInversion"
             }
@@ -35,20 +36,20 @@
         {
             "type": "errorCodeLine",
             ".*;[[:blank:]]*": "pointVirguleFin",
-            "\\s*(\\w)+\\s+(\\w)+\\s*=.*": "typeVariableDeclaration",
+            "\\s*(\\w)+\\s+(\\w)+\\s*=.*": "typeVariableDeclaration"
         },
         {
-            "condition": "!code.endByTwoPoints() TODO",
+            "condition": "NOT code.endByTwoPoints",
             "block": {
-                "condition": "code.isStruct()",
+                "condition": "code.isStruct",
                 "block": {
-                    "regexOn": "code.getFirstWord() TODO",
+                    "regexOn": "code.getFirstWord()",
                     "for":  "deuxPointsFor",
                     "if":  "deuxPointsIf",
                     "elif":  "deuxPointsElif",
                     "else":  "deuxPointsElse",
                     "def":  "deuxPointsDef",
-                    "while":  "deuxPointsWhil"
+                    "while":  "deuxPointsWhile"
                 }
             }
         }

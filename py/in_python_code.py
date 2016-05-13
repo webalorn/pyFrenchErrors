@@ -1,6 +1,7 @@
 # coding=utf-8
 from math import *
-a = int("5.0 -3.3 2.5")
+while 3 <= 0
+    print(1)
 """from module import *
 from math import *
 import sys

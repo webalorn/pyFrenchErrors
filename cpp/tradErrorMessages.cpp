@@ -1,4 +1,5 @@
 #include "tradErrorMessages.hpp"
+#include "utility.hpp"
 
 TradErrorMessages::TradErrorMessages(std::ifstream dataFile) {
     nlohmann::json translationsJSON;
@@ -9,7 +10,9 @@ TradErrorMessages::TradErrorMessages(std::ifstream dataFile) {
     }
     for (nlohmann::json::iterator itLang = translationsJSON.begin(); itLang != translationsJSON.end(); ++itLang) {
         for (nlohmann::json::iterator itTranslate = itLang.value().begin(); itTranslate != itLang.value().end(); ++itTranslate) {
-            messages[itLang.key()][itTranslate.key()] = itTranslate.value();
+            for (std::string key : split(itTranslate.key(), '|')) {
+                messages[itLang.key()][key] = itTranslate.value();
+            }
         }
     }
 }
