@@ -64,7 +64,7 @@ int main(int argc, char** argv) {
         /*
             Affichage de la sortie
         */
-        cout << "Une erreur s'est produite à la ligne " << realErrorLineNumber + 1 << " de ton code." << endl;
+        cout << "Une erreur s'est produite à la ligne " << realErrorLineNumber + 1 << " de votre code." << endl;
 //        cout << "Tu as écrit le code : " << endl << codeFile.getLine(realErrorLineNumber).get() << endl << endl;
 
         if (realErrorMessage != "") {
