@@ -2,9 +2,9 @@
 #include <iostream>
 #include "meaningTreeFcts.hpp"
 
-PyErrorMeaningTree::PyErrorMeaningTree (std::ifstream dataFile) {
+PyErrorMeaningTree::PyErrorMeaningTree (std::ifstream* dataFile) {
     try {
-        dataFile >> tree;
+        *dataFile >> tree;
     } catch (const std::invalid_argument& ia) {
         LogError::logFatal("Construction PyErrorMeaningTree, fichier JSON invalide: " + std::string(ia.what()));
     }

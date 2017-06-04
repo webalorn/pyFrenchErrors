@@ -1,10 +1,10 @@
 #include "tradErrorMessages.hpp"
 #include "utility.hpp"
 
-TradErrorMessages::TradErrorMessages(std::ifstream dataFile) {
+TradErrorMessages::TradErrorMessages(std::ifstream* dataFile) {
     nlohmann::json translationsJSON;
     try {
-        dataFile >> translationsJSON;
+        *dataFile >> translationsJSON;
     } catch (const std::invalid_argument& ia) {
         LogError::logFatal("Construction TradErrorMessages, fichier JSON invalide: " + std::string(ia.what()));
     }

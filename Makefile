@@ -13,6 +13,12 @@ all: $(SOURCES) $(MAINFILE) $(EXECUTABLE)
 $(EXECUTABLE): $(OBJECTS) $(MAINOBJ)
 	$(CC) $(LDFLAGS) $(OBJECTS) $(MAINOBJ) -o $@
 
+pyfe: $(OBJECTS) pyfe.o
+	$(CC) $(LDFLAGS) $(OBJECTS) pyfe.o -o $@
+
+pyfe.o: pyfe.cpp
+	$(CC) $(CFLAGS) $< -o $@
+
 obj/%.o: cpp/%.cpp
 	$(CC) $(CFLAGS) $< -o $@
 

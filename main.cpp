@@ -26,8 +26,10 @@ int main() {
         /*
             Construction des objets persistants (indépendants du cas)
         */
-        PyErrorMeaningTree meaningTree(std::ifstream("data/pyErrorMeaningTree.json"));
-        TradErrorMessages traductions(std::ifstream("data/errorMessageTranslate.json"));
+        std::ifstream emFile("data/pyErrorMeaningTree.json");
+        PyErrorMeaningTree meaningTree = PyErrorMeaningTree(&emFile);
+        std::ifstream tradFile("data/errorMessageTranslate.json");
+        TradErrorMessages traductions(&tradFile);
 
         /*
             Éxecution du code python, récupération du code et de la sortie

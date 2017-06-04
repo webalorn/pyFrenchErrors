@@ -32,7 +32,7 @@ private:
     bool useBoolFct(std::string, FctContext);
     std::string getReturnFct(std::string, FctContext);
 public:
-    PyErrorMeaningTree(std::ifstream);
+    PyErrorMeaningTree(std::ifstream*);
     errorDescription getMeaningMessages(PyError&, PyFile&);
 };
 

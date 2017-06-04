@@ -46,6 +46,6 @@ int PyFile::getLineOpenFirstBracket(int iLine) {
 
 PyLine PyFile::getLine(int iLine) {
     if (iLine < 0 || iLine >= (int)linesCode.size())
-        return PyLine("--- Error: line inexistante ---");
+        return PyLine("--- Erreur: ligne inexistante ---");
     return linesCode[iLine];
 }
