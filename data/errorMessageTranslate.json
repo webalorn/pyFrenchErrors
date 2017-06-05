@@ -24,7 +24,7 @@
 "indentationErrorEmptyBlock": "Vous avez un bloc d'instruction (if, elif, else, while, for, def...) qui est VIDE,\nce qui est interdit.",
 "indentationErrorLevel": "TOUTES les instructions d'un même bloc d'instructions (if, elif, else, while, for, def...)\ndoivent avoir le même nombre d'espaces devant elles (sauf si elles sont dans des sous-blocs).",
 
-"indexError": "Vous accédez à une case de la liste qui n'existe pas. Si vous utilisez une variable,\nvérifiez qu'elle ne peut pas être trop grande. Souvenez-vous que les cases d'une liste sont numérotées de 0 à TAILLE-1.",
+"indexError": "Vous accédez à une case de la liste qui n'existe pas. Si vous utilisez une variable,\nvérifiez qu'elle ne peut pas être trop grande.\nSouvenez-vous que les cases d'une liste sont numérotées de 0 à TAILLE-1 en Python,\net de 1 à TAILLE en Blockly et Scratch.",
 "KeyError": "Vous accédez à une CLÉ (une case) de votre dictionnaire qui n'existe pas.\nVérifiez que la clé a bien été définie dans le dictionnaire !",
 "ZeroDivisionError": "Cette instruction effectue une division par zero, ce qui est IMPOSSIBLE.\nSi vous utilisez une variable, vérifiez que le diviseur ne vaut jamais 0.",
 "mathDomainError": "Vous utilisez un fonction mathématique en lui donnant un nombre qui est interdit !",
@@ -39,6 +39,8 @@
 
 "undefinedVar": "La variable (ou la fonction) {{0}} n'existe pas, ou pas encore à cet endroit.\nVérifiez que vous ne vous êtes pas trompé dans le nom !\nSi c'est vous qui l'avez créée, vérifie que vous l'avez fait AVANT.\nSinon, vérifiez que le module est bien importé.",
 "returnOutsideFct": "L'instruction 'return' doit se trouver dans une fonction.\nElle termine la fonction et indique ce qu'elle retourne.",
+
+"IntNotSubscriptable": "Vous avez essayé d'utiliser un entier en tant que liste.\nVérifiez vos affectations : par exemple, cela peut arriver si vous essayez d'affecter\nun entier à une variable qui est censée représenter une liste,\nalors que vous voulez affecter cet entier à une case de cette liste.",
 
 "custom": "{{0}}"
 }}

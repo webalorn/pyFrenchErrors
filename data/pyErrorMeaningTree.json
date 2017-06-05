@@ -96,5 +96,17 @@
 "KeyError": "KeyError",
 "ZeroDivisionError": "ZeroDivisionError",
 "ImportError": "ImportError",
-"EOFError": "EOFError"
+"EOFError": "EOFError",
+"TypeError": {
+    "type": "errorMessage",
+    "var": "msg",
+
+    "'int' object is not subscriptable": {
+        "typeError": "IntNotSubscriptable"
+    },
+
+    "'int' object does not support item assignment": {
+        "typeError": "IntNotSubscriptable"
+    }
+}
 }
