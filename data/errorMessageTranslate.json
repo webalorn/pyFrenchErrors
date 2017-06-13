@@ -41,6 +41,9 @@
 "returnOutsideFct": "L'instruction 'return' doit se trouver dans une fonction.\nElle termine la fonction et indique ce qu'elle retourne.",
 
 "IntNotSubscriptable": "Vous avez essayé d'utiliser un entier en tant que liste.\nVérifiez vos affectations : par exemple, cela peut arriver si vous essayez d'affecter\nun entier à une variable qui est censée représenter une liste,\nalors que vous voulez affecter cet entier à une case de cette liste.",
+"MaximumRecursion": "Vous avez dépassé la limite d'appels récursifs de fonction autorisés.\nCela se produit en général lorsque votre programme contient une boucle infinie d'appels.\nVérifiez que vos appels de fonction ne provoquent pas des boucles infinies.",
+
+"UnsupportedOperand": "Vous avez essayé d'utiliser l'opérateur '{{0}}' sur deux valeurs de types\nincompatibles, '{{1}}' et '{{2}}'.\nVérifiez que vous utilisez les bonnes valeurs dans vos opérations.",
 
 "custom": "{{0}}"
 }}

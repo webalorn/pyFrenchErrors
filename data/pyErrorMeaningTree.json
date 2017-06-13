@@ -107,6 +107,19 @@
 
     "'int' object does not support item assignment": {
         "typeError": "IntNotSubscriptable"
+    },
+
+    "unsupported operand type... for ([^:]*): '(.*)' and '(.*)'": {
+        "typeError": "UnsupportedOperand",
+        "params": ["msg[1]", "msg[2]", "msg[3]"]
+    }
+},
+"RuntimeError": {
+    "type": "errorMessage",
+    "var": "msg",
+
+    "maximum recursion depth exceeded": {
+        "typeError": "MaximumRecursion"
     }
 }
 }
