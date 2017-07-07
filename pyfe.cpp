@@ -70,10 +70,14 @@ int main(int argc, char** argv) {
         if (realErrorMessage != "") {
             cout << realErrorMessage << endl;
             errorTranslated = true;
-/*        } else {
-            cout << "Message d'erreur Python :" << endl;
-            cout << pyErr.getType() << " : " << pyErr.getMessage() << endl;*/
         }
+
+        // Affichage du message original
+        ifstream origErr;
+        origErr.open(argv[2]);
+        cout << endl << "Message d'erreur Python complet :" << endl;
+        cout << origErr.rdbuf();
+        origErr.close();
     } catch (string e) {
         cout << e << endl;
     } catch (const invalid_argument& ia) {
