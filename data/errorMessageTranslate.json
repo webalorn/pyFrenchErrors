@@ -37,7 +37,7 @@
 "valueErrorIntMappage": "Vous utilisez la fonction int() pour convertir en nombre une suite d'entiers.\nMais vous convertissez plusieurs nombres à la fois !\nPour cela, remplacez 'int(--ton code--)' par 'map(int, (--ton code--).split())'.",
 "valueErrorIntInsteadOfFloat": "Vous essayez de convertir un nombre à virgule en nombre entier.\nPour utiliser un nombre à virgule, remplace int() par float().",
 
-"undefinedVar": "La variable (ou la fonction) {{0}} n'existe pas, ou pas encore à cet endroit.\nVérifiez que vous ne vous êtes pas trompé dans le nom !\nSi c'est vous qui l'avez créée, vérifie que vous l'avez fait AVANT.\nSinon, vérifiez que le module est bien importé.",
+"undefinedVar": "La variable (ou la fonction) {{0}} n'existe pas, ou pas encore à cet endroit.\nVérifiez que vous ne vous êtes pas trompé dans le nom !\nSi c'est vous qui l'avez créée, vérifiez que vous l'avez fait AVANT.\nSinon, vérifiez que le module est bien importé.",
 "returnOutsideFct": "L'instruction 'return' doit se trouver dans une fonction.\nElle termine la fonction et indique ce qu'elle retourne.",
 
 "IntNotSubscriptable": "Vous avez essayé d'utiliser un entier en tant que liste.\nVérifiez vos affectations : par exemple, cela peut arriver si vous essayez d'affecter\nun entier à une variable qui est censée représenter une liste,\nalors que vous voulez affecter cet entier à une case de cette liste.",
