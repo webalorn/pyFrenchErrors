@@ -23,6 +23,7 @@ nlohmann::json ParsedError::toJson() {
         {"text", text},
         {"stderr", fromError->stderr},
         {"causeFound", isDefined()},
+        {"vars", vars},
     };
     if (line == -1) {
         encoded["line"] = nullptr;
@@ -132,8 +133,8 @@ std::string ErrorParser::parseGetMessageId() {
     } else if (error.getType() == "ValueError") { // TODO : float ? etc...
 
         if (matchWith(msg, "math domain error")) {
-            messageVars["log"] = matchWith(errorCodeLine, ".*log.*");
-            messageVars["sqrt"] = matchWith(errorCodeLine, ".*sqrt.*");
+            messageVars["detail_log"] = matchWith(errorCodeLine, ".*log.*") ? "yes" : "";
+            messageVars["detail_sqrt"] = matchWith(errorCodeLine, ".*sqrt.*") ? "yes" : "";
             return "mathDomainError";
         }
         if (matchWith(msg, "invalid literal for int\\(\\) with base [[:digit:]]*: '(.*)'", {{1, "literal"}})) {
@@ -145,6 +146,9 @@ std::string ErrorParser::parseGetMessageId() {
                 return "valueErrorIntInsteadOfFloat";
             }
             return "valueErrorInt";
+        }
+        if (matchWith(msg, "could not convert (.*) to (.*): (.*)", {{1, "type1"}, {2, "type2"}, {3, "value"}})) {
+            return "CantConvert";
         }
 
     } else if (error.getType() == "NameError") {
@@ -176,6 +180,9 @@ std::string ErrorParser::parseGetMessageId() {
 
             return "UnsupportedOperand";
         }
+        if (matchWith(msg, "Can't convert (.+) .*to (.+) implicitly", {{1, "type1"}, {2, "type2"}})) {
+            return "ConvertImplicit";
+        }
 
     } else if (error.getType() == "RuntimeError") {
 
@@ -183,6 +190,12 @@ std::string ErrorParser::parseGetMessageId() {
             return "MaximumRecursion";
         }
         
+    } else if (error.getType() == "RecursionError") {
+
+        if (matchWith(msg, "maximum recursion depth exceeded")) {
+            return "MaximumRecursion";
+        }
+
     }
     messageVars["stderr"] = error.stderr;
     return "";

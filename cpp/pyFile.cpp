@@ -1,5 +1,4 @@
 #include "pyFile.hpp"
-#include <iostream>
 
 PyFile::PyFile(std::vector<std::string> lines) {
     for (std::string l : lines) {

@@ -1,0 +1,7 @@
+{
+    "line": 3,
+    "messageId": "undefinedVar",
+    "vars": {
+        "undefVar": "abc"
+    }
+}

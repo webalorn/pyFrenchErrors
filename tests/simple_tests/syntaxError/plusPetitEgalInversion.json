@@ -1,0 +1,6 @@
+{
+    "line": 1,
+    "messageId": "plusPetitEgalInversion",
+    "text": "Vous ne devez pas écrire '=<' mais : '<='.",
+    "vars": {}
+}

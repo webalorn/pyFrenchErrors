@@ -33,7 +33,6 @@ void showOutput(ParsedError& err, PyFile& codeFile) {
 }
 
 int main(int argc, char* argv[]) {
-
    if (argc < 4) {
         std::cerr << "Erreur : pas assez d'arguments." << std::endl;
         std::cerr << "Utilisation: pyfe solution.py pythonStderr outputDest.json [target(=python)] [langage(=fr)]" << std::endl;
@@ -55,24 +54,21 @@ int main(int argc, char* argv[]) {
         TradErrorMessages translator(tradFile);
 
         /*
-            Éxecution du code python, récupération du code et de la sortie
+            Récupération du code et de la sortie
         */
-        system("python3 local_tests/in_python_code.py 2> local_tests/in_python_erros > local_tests/pyOut");
         PyFile codeFile(getFile(codePath));
         PyError pyErr(getFile(stderrPath));
-        ErrorParser parser(pyErr, codeFile);
+
         /*
-            Inteprétation du messages
+            Inteprétation du message
         */
-
-
+        ErrorParser parser(pyErr, codeFile);
         ParsedError err = parser.parse();
         translator.setMessage(&err, langage, target);
 
         /*
             Affichage de la sortie
         */
-
         std::ofstream outFile(jsonOutput);
         showOutput(err, codeFile);
         outFile << err.toJson();

@@ -38,6 +38,16 @@ void TradErrorMessages::setMessage(ParsedError* parsedErr, std::string langage, 
     }
     std::string theMessage = messages[langage][target][messageId];
     for (auto& var : parsedErr->vars) {
+        if (var.first.rfind("detail", 0) == 0 && var.second != "") {
+            std::string id2 = messageId + var.first.substr(6);
+            if (messages[langage][target].find(id2) == messages[langage][target].end()) {
+                LogError::log("TradErrorMessages::getMessage: message detail " + id2 + " inconnu dans le langage : " + langage);
+                return;
+            }
+            theMessage += "\n" + messages[langage][target][id2];
+        }
+    }
+    for (auto& var : parsedErr->vars) {
         std::string keyTemplate = "\\{\\{" + var.first + "\\}\\}";
         theMessage = std::regex_replace(theMessage, std::regex(keyTemplate), var.second);
     }

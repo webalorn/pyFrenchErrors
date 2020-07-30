@@ -1,0 +1,9 @@
+{
+    "line": 1,
+    "messageId": "CantConvert",
+    "vars": {
+        "type1": "string",
+        "type2": "float",
+        "value": "'ke'"
+    }
+}

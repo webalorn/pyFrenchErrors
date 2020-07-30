@@ -1,0 +1,7 @@
+{
+    "line": 4,
+    "messageId": "missingParentheses",
+    "vars": {
+        "missFunction": "print"
+    }
+}

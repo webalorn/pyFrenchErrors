@@ -45,6 +45,8 @@
 "MaximumRecursion": "Vous avez dépassé la limite d'appels récursifs de fonction autorisés.\nCela se produit en général lorsque votre programme contient une boucle infinie d'appels.\nVérifiez que vos appels de fonction ne provoquent pas des boucles infinies.",
 
 "UnsupportedOperand": "Vous avez essayé d'utiliser l'opérateur '{{operand}}' sur deux valeurs de types\nincompatibles, '{{left}}' et '{{right}}'.\nVérifiez que vous utilisez les bonnes valeurs dans vos opérations.",
+"ConvertImplicit" : "Vous essayer d'utiliser le type {{type1}} comme une valeur du type {{type2}}. Mais il n'est pas possible de convertir implicitement entre ces types.",
+"CantConvert" : "Il n'est pas possible de convertir la valeur {{value}} du type {{type1}}, vers le type {{type2}}.",
 
 "default": "{{stderr}}"
 }}}

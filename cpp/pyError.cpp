@@ -3,7 +3,6 @@
 #include <vector>
 #include <algorithm>
 #include <regex>
-#include <iostream>
 
 PyError::PyError(std::vector<std::string> errorOutput) {
     stderr = strJoin(errorOutput, "\n");
@@ -39,7 +38,6 @@ void PyError::parseErrorLastLine(std::string line) {
     if (std::regex_search(line, match, rgx)) {
         typeOfError = match[1], detailedMessage = match[2];
     } else {
-        // TODO: exception
         typeOfError = "?";
         detailedMessage = line;
     }
