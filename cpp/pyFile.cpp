@@ -2,17 +2,16 @@
 #include <iostream>
 
 PyFile::PyFile(std::vector<std::string> lines) {
-    for (std::string l : lines)
+    for (std::string l : lines) {
         linesCode.push_back(l);
-    //std::cerr << "---------- CONSTRUCT PYFILE"<< std::endl;
+    }
     nbOpenBracketsLine = std::vector<int>(lines.size(), 0);
+
     // Parsing
     int nbOpenBrackets = 0;
     char openQuotes = 0;
     for (size_t iLine = 0; iLine < lines.size(); iLine++) {
-        //std::cerr << "=====> iLine = " << iLine << std::endl;
         for (char codeCar : lines[iLine]) {
-            //std::cerr << "--- c=" << codeCar <<std::endl;
             if (openQuotes > 0) {
                 if (codeCar == openQuotes) {
                     openQuotes = 0;
@@ -26,10 +25,8 @@ PyFile::PyFile(std::vector<std::string> lines) {
                     nbOpenBrackets--;
             }
         }
-        //std::cerr << "Opening brackets = " << nbOpenBrackets << std::endl;
         nbOpenBracketsLine[iLine] = nbOpenBrackets;
     }
-    //std::cerr << "---------- END CONSTRUCT PYFILE"<< std::endl;
 }
 
 int PyFile::getNbOpenBrackets(int iLine) {
@@ -45,7 +42,8 @@ int PyFile::getLineOpenFirstBracket(int iLine) {
 }
 
 PyLine PyFile::getLine(int iLine) {
-    if (iLine < 0 || iLine >= (int)linesCode.size())
+    if (iLine < 0 || iLine >= (int)linesCode.size()) {
         return PyLine("--- Erreur: ligne inexistante ---");
+    }
     return linesCode[iLine];
 }

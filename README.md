@@ -1,30 +1,31 @@
 # pyFrenchErrors
-Projet en c++ dont le but est de permettre une compréhension plus aisée des messages d'erreur python en fançais (ou autre langue). Il se base su le parsing des messages d'erreur de python et un parcour simple du code pour détecter les erreures les plus courantes et pouvoir, outre traduire les messages d'erreure, déterminer de manière plus précise que python ces causes. Il a pour but de servir aux débutants et aux plus jeunes pour faciliter leur apprentissage du langage.
+
+Projet en c++ dont le but est de permettre une compréhension plus aisée des messages d'erreur python en fançais (ou autre langue). Il se base su le parsing des messages d'erreur de python et un parcour simple du code pour détecter les erreurs les plus courantes et pouvoir, outre traduire les messages d'erreur, déterminer de manière plus précise que python ces causes. Il a pour but de servir aux débutants et aux plus jeunes pour faciliter leur apprentissage du langage.
 
 ## Format des fichiers JSON
 #### errorMessageTranslate.json
-Ce fichier a pour but de regroupper les messages qui seront affichés, dans différentes langues. L'objet principal contient des clées, chacune correpondant à un langage. Le contenu de ses sous-objets est un ensemble de couples clé/valeur, la clé correpondant à un type d'erreure, la valeur au texte qui sera affiché.
+Ce fichier a pour but de regroupper les messages qui seront affichés, dans différentes langues. L'objet principal contient des clées, chacune correpondant à un langage. Le contenu de ses sous-objets est un ensemble de couples clé/valeur, la clé correpondant à un type d'erreur, la valeur au texte qui sera affiché.
 - Pour aassocier plusieures clée à un seul texte, on peut les séparer pas `'|'` comme ici: `"typeError1|typeError2": "myMessage"`
 - Un texte peut inclures des paramètres (décrits dans `pyErrorMeaningTree.json`), sous la forme: `{{6}}`, avec en '6' le numéro du paramètre (le premier correpond à `{{0}}`).
 ###### Exemple:
 ```
 { "fr": {
-    "indexError|KeyError": "Clée ou index invalide",
+    "IndexError|KeyError": "Clée ou index invalide",
     "ZeroDivisionError": "Division pas zéro"
 }, "en":{
-    "indexError|KeyError": "invalid key or index",
+    "IndexError|KeyError": "invalid key or index",
     "ZeroDivisionError": "Division by zero"
 }}
 ```
 #### pyErrorMeaningTree.json
-Ce fichier décrit l'arbre de choix qui va déterminer, pour une erreure, quel message(s) à afficher, en se basant sur des regex et des appels à des fonctions c++ (fichier meaningTreeFcts.cpp). 
+Ce fichier décrit l'arbre de choix qui va déterminer, pour une erreur, quel message(s) à afficher, en se basant sur des regex et des appels à des fonctions c++ (fichier meaningTreeFcts.cpp). 
 
 ##### Les différents types d'objets:
 ###### Bloc regex
 - Un attribut **"type"** avec comme valeur:
     - **"errorMessage"** (regex sur le message d'erreur python)
     - **"errorType"** (regex sur le type d'erreur/exception donné par python, souvent simple vérification d'égalité)
-    - **"errorCodeLine"** (regex sur la ligne d'erreure donnée par python
+    - **"errorCodeLine"** (regex sur la ligne d'erreur donnée par python
 - OU ALORS: au lieu de la clée **"type"**, une clée **"regexOn"**, avec en valeur une `parsableValue` (cf plus bas). La regex se fera sur la chaine obtenue en parsant cette valeur. 
 - *[OPTIONEL]* attribut **"var"**: nom de la variable dans laquelle le résultat de la regex sera stockée (cf plus bas, parsableValue)
 - Un ensemble de paires clée/valeur: la clée représente la regex, la valeur est un bloc qui sera éxécuté si la regex match totalement la chaine évaluée (**"type"** ou **"regexOn"**). L'ordre du fichier n'est pas celui de l'évaluation (l'ordre ne doit pas importer)
@@ -37,8 +38,8 @@ Ce fichier décrit l'arbre de choix qui va déterminer, pour une erreure, quel m
 - *[OPTIONEL]* Un attrubut **"else"**: l'objet qui sera évalué si la condition est fausse.
 
 ###### Bloc typeError
-- Un attribut **"typeError"** dont la valeur sera retournée comme nom d'erreure principale du bloc
-- *[OPTIONEL]* attribut **"realErrorLine"** : une `parsableValue` qui sera parsée en int pour préciser la vraie ligne de l'erreure si celle fournie par python est fausse.
+- Un attribut **"typeError"** dont la valeur sera retournée comme nom d'erreur principale du bloc
+- *[OPTIONEL]* attribut **"realErrorLine"** : une `parsableValue` qui sera parsée en int pour préciser la vraie ligne de l'erreur si celle fournie par python est fausse.
 - *[OPTIONEL]* Attribut **"concatenate"**: [{...}, {...}] Un array d'objets. Les types d'erreurs principaux et secondaires retournés par chaque bloc seront ajouté comme type d'erreur secondaires. Les messages secondaires seront concaténé avec le premier à l'affichage, pour donner des infos supplémentaires.
 - *[OPTIONEL]* Attribut **"params"**: paramètres passés à errorMessageTranslate.json pour remplacer les {{?}} dans les chaines.
 
@@ -70,14 +71,14 @@ Vous aurez probablement besoin des includes suivants:
 ```
 #### Objets persistants
 ###### Objet *PyErrorMeaningTree*
-Il doit être construit en lui passant un flux sur le fichier **pyErrorMeaningTree.json** . Il peut être conservé ensuite au fil des requètes (une seule construction pour tester de mutliples erreures). Il a pour but de déterminer le(s) id du/des message(s) à afficher.
+Il doit être construit en lui passant un flux sur le fichier **pyErrorMeaningTree.json** . Il peut être conservé ensuite au fil des requètes (une seule construction pour tester de mutliples erreurs). Il a pour but de déterminer le(s) id du/des message(s) à afficher.
 
 ###### Object *TradErrorMessages*
-Il doit être construit en lui passant un flux sur le fichier **errorMessageTranslate.json** . Il peut être conservé ensuite au fil des requètes (une seule construction pour tester de mutliples erreures). Il transformera un ensemble d'ID de messages d'erreur en un message intelligible dans la langue cible.
+Il doit être construit en lui passant un flux sur le fichier **errorMessageTranslate.json** . Il peut être conservé ensuite au fil des requètes (une seule construction pour tester de mutliples erreurs). Il transformera un ensemble d'ID de messages d'erreur en un message intelligible dans la langue cible.
 
 #### Objets temporaires
 ###### Objet *PyFile*
-Il doit être construit en lui passant en paramètre un std::vector\<std::string\> des lignes composant le fichier de code python qui a déclenché l'erreure.
+Il doit être construit en lui passant en paramètre un std::vector\<std::string\> des lignes composant le fichier de code python qui a déclenché l'erreur.
 ###### Objet *PyError*
 Il doit être construit en lui passant en paramètre un std::vector\<std::string\> des lignes de la sortie **d'erreur uniquement** de python.
 

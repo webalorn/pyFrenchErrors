@@ -1,25 +1,20 @@
 CC=g++
-CFLAGS=-c -Wall -std=c++14 -pedantic -Wpedantic -Ihpp/ -IjsonParser/src/
+CFLAGS=-c -Wall -std=c++14 -pedantic -Wpedantic -Ihpp/ -Idependencies
 LDFLAGS=
 
 SOURCES=$(wildcard cpp/*.cpp)
 OBJECTS=$(SOURCES:cpp/%.cpp=obj/%.o)
-EXECUTABLE=readErr
+EXECUTABLE=pyfe
 MAINFILE=main.cpp
 MAINOBJ=obj/main.o
 
-all: $(SOURCES) $(MAINFILE) $(EXECUTABLE)
+all: $(OBJECTS) $(MAINFILE) $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS) $(MAINOBJ)
 	$(CC) $(LDFLAGS) $(OBJECTS) $(MAINOBJ) -o $@
 
-pyfe: $(OBJECTS) pyfe.o
-	$(CC) $(LDFLAGS) $(OBJECTS) pyfe.o -o $@
-
-pyfe.o: pyfe.cpp
-	$(CC) $(CFLAGS) $< -o $@
-
 obj/%.o: cpp/%.cpp
+	mkdir -p obj
 	$(CC) $(CFLAGS) $< -o $@
 
 $(MAINOBJ): $(MAINFILE)

@@ -24,12 +24,10 @@ std::string PyLine::get() {
 }
 
 bool PyLine::isStruct() {
-    std::set<std::string> pyStructs = {"if", "for", "else", "elif", "while", "def", "class"};
-    return pyStructs.find(getFirstWord()) != pyStructs.end();
+    return isIn<std::string>(getFirstWord(), {"if", "for", "else", "elif", "while", "def", "class"});
 }
 bool PyLine::isConditianal() {
-    std::set<std::string> pyStructs = {"if", "else", "elif", "while"};
-    return pyStructs.find(getFirstWord()) != pyStructs.end();
+    return isIn<std::string>(getFirstWord(), {"if", "else", "elif", "while"});
 }
 bool PyLine::endByTwoPoints() {
     return (*prev(lastChar)) == ':';

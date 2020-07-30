@@ -5,12 +5,15 @@
 #include <string>
 #include "pyLine.hpp"
 #include "pyFile.hpp"
+#include "utility.hpp"
 
 class PyError {
 public:
+    std::string stderr;
+
     PyError(std::vector<std::string>);
     int getLineNumber();
-    int getChar();
+    int getCharPos();
     std::string getType();
     std::string getMessage();
     PyLine getPyLine();
@@ -20,7 +23,7 @@ private:
     int charOfError; // from 0 to...
 
     void parseErrorLastLine(std::string);
-    void parseBlockContentError(std::vector<std::string>);
+    void parseTraceback(std::vector<std::string>);
 
 public:
     static const int undefinedPosition = -1;

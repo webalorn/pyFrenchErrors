@@ -1,4 +1,0 @@
-  File "py/in_python_code.py", line 3
-    while 3 <= 0
-               ^
-SyntaxError: invalid syntax

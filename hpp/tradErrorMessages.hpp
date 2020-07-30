@@ -9,16 +9,15 @@
 #include <regex>
 #include "json.hpp"
 
-#include "usefulStructs.hpp"
+#include "errorParser.hpp"
 #include "utility.hpp"
 
-class TradErrorMessages {
+class TradErrorMessages { 
 private:
-    std::map<std::string, std::map<std::string, std::string>> messages;
+    std::map<std::string, std::map<std::string, std::map<std::string, std::string>>> messages;
 public:
-    TradErrorMessages(std::ifstream*);
-    std::string getMessage(errorMsgParams messageWithParams, std::string langage);
-    std::string getMessage(std::vector<errorMsgParams> messageWithParamsTab, std::string langage);
+    TradErrorMessages(std::ifstream&);
+    void setMessage(ParsedError*, std::string, std::string);
 };
 
 #endif

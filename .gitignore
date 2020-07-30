@@ -4,3 +4,5 @@ obj/*.o
 *.pyc
 pyOut
 *.ghc
+local_tests/*
+pyfe

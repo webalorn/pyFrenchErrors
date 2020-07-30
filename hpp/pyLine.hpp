@@ -2,6 +2,7 @@
 #define PY_CODE_H
 
 #include <string>
+#include "utility.hpp"
 
 class PyLine {
 private:
