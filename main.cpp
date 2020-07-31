@@ -13,7 +13,6 @@ std::vector<std::string> getFile(std::string fileName) {
     std::ifstream errorFile(fileName);
     if (errorFile.bad()) {
         LogError::logFatal("Impossible d'ouvrir le fichier `" + fileName + "`.");
-        exit(EXIT_FAILURE);
     }
 
     std::vector<std::string> linesOfFile;
@@ -47,10 +46,11 @@ int main(int argc, char* argv[]) {
     std::string langage = argc > 5 ? argv[5] : "fr";
 
     try {
+
         /*
             Construction des objets persistants (indépendants du cas)
         */
-        std::ifstream tradFile("data/errorMessageTranslate.json");
+        std::ifstream tradFile("errorMessages.json");
         TradErrorMessages translator(tradFile);
 
         /*

@@ -20,6 +20,11 @@ TradErrorMessages::TradErrorMessages(std::ifstream& dataFile) {
 }
 
 void TradErrorMessages::setMessage(ParsedError* parsedErr, std::string langage, std::string target) {
+    std::string targetName = target;
+    if (target == "blockly" || target == "scratch") {
+        target = "blocks";
+    }
+
     std::string messageId = parsedErr->messageId;
     if (messageId == "") {
         messageId = "default";
@@ -47,7 +52,9 @@ void TradErrorMessages::setMessage(ParsedError* parsedErr, std::string langage, 
             theMessage += "\n" + messages[langage][target][id2];
         }
     }
-    for (auto& var : parsedErr->vars) {
+    auto vars = parsedErr->vars;
+    vars["target"] = targetName;
+    for (auto& var : vars) {
         std::string keyTemplate = "\\{\\{" + var.first + "\\}\\}";
         theMessage = std::regex_replace(theMessage, std::regex(keyTemplate), var.second);
     }
