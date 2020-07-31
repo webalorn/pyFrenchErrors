@@ -23,30 +23,37 @@ std::vector<std::string> getFile(std::string fileName) {
     return linesOfFile;
 }
 
-void showOutput(ParsedError& err, PyFile& codeFile) {
-    std::cout << "-> Une erreur s'est produite à la ligne " << err.line + 1  << " du code" << std::endl;
-    std::cout << "Vous avez écris le code : " << std::endl << codeFile.getLine(err.line).get() << std::endl << std::endl;
+void showOutput(ParsedError& err, PyFile& codeFile, std::string target) {
+    if (target == "python") {
+        std::cout << "Une erreur s'est produite à la ligne " << err.line + 1  << " de votre code" << std::endl;
+        // std::cout << "Vous avez écris le code : " << std::endl << codeFile.getLine(err.line).get() << "\n\n";
+    } else {
+        std::cout << "Une erreur s'est produite dans votre code " << target;
+    }
+    if (err.messageId.size()) {
+        std::cout << "-> Voici le problème : \n";
+        std::cout << err.text << std::endl;
+    }
 
-    std::cout << "-> Voici le problème : " << std::endl;
-    std::cout << err.text << std::endl;
+    std::cout << std::endl << "Message d'erreur Python complet :" << std::endl;
+    std::cout << err.fromError->stderr;
 }
 
 int main(int argc, char* argv[]) {
-   if (argc < 4) {
+   if (argc < 3) {
         std::cerr << "Erreur : pas assez d'arguments." << std::endl;
-        std::cerr << "Utilisation: pyfe solution.py pythonStderr outputDest.json [target(=python)] [langage(=fr)]" << std::endl;
+        std::cerr << "Utilisation: pyfe solution.py pythonStderr [outputDest.json=""] [target(=python)] [langage(=fr)]" << std::endl;
         return 1;
     }
 
     std::string codePath = argv[1];
     std::string stderrPath = argv[2];
-    std::string jsonOutput = argv[3];
 
+    std::string jsonOutput = argc > 3 ? argv[3] : "";
     std::string target = argc > 4 ? argv[4] : "python";
     std::string langage = argc > 5 ? argv[5] : "fr";
 
     try {
-
         /*
             Construction des objets persistants (indépendants du cas)
         */
@@ -69,15 +76,17 @@ int main(int argc, char* argv[]) {
         /*
             Affichage de la sortie
         */
-        std::ofstream outFile(jsonOutput);
-        showOutput(err, codeFile);
-        outFile << err.toJson();
+        if (jsonOutput.size()) {
+            std::ofstream outFile(jsonOutput);
+            outFile << err.toJson();
+        }
+        showOutput(err, codeFile, target);
 
     } catch (std::string e) { // In case there is no error
         std::cout << e << std::endl;
         return 1;
     } catch (const std::invalid_argument& ia) {
-        LogError::logFatal("Invalid argument : " + std::string(ia.what()));
+        LogError::logFatal("Argument invalide : " + std::string(ia.what()));
     }
     return 0;
 }

@@ -14,12 +14,12 @@ L'executable est le fichier `pyfe`. Il peut être déplacé, mais il doit toujou
 ### Utilisation
 
 ```bash
-pyfe solution.py pythonStderr outputDest.json [target(=python)] [langage(=fr)]
+pyfe solution.py pythonStderr [outputDest.json=""] [target(=python)] [langage(=fr)]
 ```
 
 - `solution.py` : chemin vers un fichier contenant le code python qui a été exécuté
 - `pythonStderr` : chemin vers un fichier contenant *la sortie d'erreure* de l'interpéteur python uniquement (pas la sortie standard !).
-- `outputDest.json` : chemin vers un fichier (éventuellement à créer) où sera écrit une description du résultat en JSON, *uniquement si pyfe se termine correctement*
+- `outputDest.json` : chemin vers un fichier (éventuellement à créer) où sera écrit une description du résultat en JSON, *uniquement si pyfe se termine correctement*. Peut être vide, dans ce cas aucune sortie JSON ne sera écrite.
 - `target` : `python`, `blockly` ou `scratch`.
 
 Le programme renvoie 0 si il s'est bien executé. Dans le cas contraire, ne pas utiliser la sortie standard ni le fichier `outputDest.json`. Il renvoie par exemple 1 si aucune erreur n'a été trouvée.
