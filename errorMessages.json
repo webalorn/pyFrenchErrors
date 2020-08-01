@@ -11,12 +11,12 @@
 "previousErrorBrackets|errorBrackets": "Vous devez avoir autant de parenthèses ouvrantes que fermantes : vous pouvez écrire '(a*(b+c))' mais PAS '(a*(b+c)' NI 'a*(b+c))'.",
 "missingParentheses": "Vous devez mettre des parenthèses autour des paramètres d'une fonction pour l'appeler : vous ne devez pas écrire '{{missFunction}} paramètres' MAIS '{{missFunction}}(paramètres)', en remplaçant 'paramètres' par les paramètres de la fonction.",
 
-"pointVirguleFin": "En python, on n'a pas besoin de mettre un point-virgule à la fin d'une instruction.",
-"typeVariableDeclaration": "En python, on n'a pas besoin de donner le type d'une variable lors de sa déclaration.",
+"pointVirguleFin": "En Python, on n'a pas besoin de mettre un point-virgule à la fin d'une instruction.",
+"typeVariableDeclaration": "En Python, on n'a pas besoin de donner le type d'une variable lors de sa déclaration.",
 
 "plusGrandEgalInversion": "Vous ne devez pas écrire '=>' mais : '>='.",
 "plusPetitEgalInversion": "Vous ne devez pas écrire '=<' mais : '<='.",
-"guillemetsError": "Vous n'avez pas bien fermé vos guillemets : vous devez avoir autant de guillements ouvrants que fermants autour d'une chaine de caractères. Par exemple, vous devez écrire 'Hello world !' ou encore \"Hello world !\".",
+"guillemetsError": "Vous n'avez pas bien fermé vos guillemets : vous devez avoir autant de guillemets ouvrants que fermants autour d'une chaine de caractères. Par exemple, vous devez écrire 'Hello world !' ou encore \"Hello world !\".",
 
 "nonAscii": "Vous avez utilisé un accent dans votre code, et vous n'avez pas le droit ! Enlevez l'accent, ou alors rajoutez au début de votre code, avant TOUTES les autres lignes :\n\"# coding=utf-8\".",
 "invalidSyntax": "Votre code n'est pas écrit correctement (syntaxe invalide) ! Vérifiez bien ce que vous avez écrit.",
@@ -32,7 +32,7 @@
 "mathDomainError_log" : "La fonction log (logarithme) prend en paramètre un nombre qui doit être STRICTEMENT SUPÉRIEUR à 0.",
 "mathDomainError_sqrt":"La fonction sqrt (racine carrée) prend en paramètre un nombre qui doit être SUPÉRIEUR OU ÉGAL à 0.",
 "ImportError": "Un fichier ou un module inexistant est importé. Vérifiez bien son nom.",
-"EOFError": "Votre code à tenté de lire une ligne de l'entrée, mais il n'y en avait pas ou plus !\nÀ chaque fois que vous utilisez input(), le code lit une nouvelle ligne.\nUne erreur se produit quand plus aucune ligne ne peut être lue.",
+"EOFError": "Votre code a tenté de lire une ligne de l'entrée, mais il n'y en avait pas ou plus !\nÀ chaque fois que vous utilisez input(), le code lit une nouvelle ligne.\nUne erreur se produit quand plus aucune ligne ne peut être lue.",
 
 "valueErrorInt": "Vous avez essayé de convertir une chaîne de caractères en un nombre entier (int), mais celle-ci ne représente pas un nombre entier (ou alors, pas seulement un unique nombre entier) !\nSi elle contient plusieurs éléments, vous pouvez les séparer en faisant :\n'ma_chaine.split()' (en remplaçant ma_chaine par la chaîne de caractères).",
 "valueErrorIntMappage": "Vous utilisez la fonction int() pour convertir en nombre une suite d'entiers. Mais vous convertissez plusieurs nombres à la fois !\nPour cela, remplacez 'int(--le code--)' par 'map(int, (--le code--).split())'.",
@@ -41,8 +41,8 @@
 "undefinedVar": "La variable (ou la fonction) {{undefVar}} n'existe pas, ou pas encore à cet endroit. Vérifiez que vous ne vous êtes pas trompé dans le nom !\nSi c'est vous qui l'avez créée, vérifiez que vous l'avez fait AVANT. Sinon, vérifiez que le module est bien importé.",
 "returnOutsideFct": "L'instruction 'return' doit se trouver dans une fonction. Elle termine la fonction et indique ce qu'elle retourne.",
 
-"IntNotSubscriptable": "Vous avez essayé d'utiliser un entier comme si c'était liste.\nVérifiez vos affectations : par exemple, cela peut arriver si vous essayez d'affecter un entier à une variable qui est censée représenter une liste ('ma_liste = 5'), alors que vous voulez affecter cet entier à une case de cette liste ('ma_liste[0] = 5').",
-"MaximumRecursion": "Vous avez dépassé la limite d'appels récursifs de fonction autorisés.\nCela se produit en général lorsque votre programme contient une fonction qui s'appelle elle-même une infinité de fois. Vérifiez que vos appels de fonction ne provoquent pas des boucles infinies.",
+"IntNotSubscriptable": "Vous avez essayé d'utiliser un entier comme si c'était une liste.\nVérifiez vos affectations : par exemple, cela peut arriver si vous essayez d'affecter un entier à une variable qui est censée représenter une liste ('ma_liste = 5'), alors que vous voulez affecter cet entier à une case de cette liste ('ma_liste[0] = 5').",
+"MaximumRecursion": "Vous avez dépassé la limite d'appels récursifs de fonction autorisés.\nCela se produit en général lorsque votre programme contient une fonction qui s'appelle elle-même une infinité de fois. Vérifiez que vos appels de fonction ne provoquent pas des boucles infinies.\nSi vous pensez que la fonction ne boucle pas infiinment, essayez d'ajouter, au début de votre code :\nimport sys\nsys.setrecursionlimit(10**9)",
 
 "UnsupportedOperand": "Vous avez essayé d'utiliser l'opérateur '{{operand}}' sur deux valeurs de types incompatibles, '{{left}}' et '{{right}}'. Vérifiez que vous utilisez les bonnes valeurs dans vos opérations.",
 "ConvertImplicit" : "Vous essayer d'utiliser le type {{type1}} comme une valeur du type {{type2}}. Mais il n'est pas possible de convertir implicitement entre ces types.",
@@ -55,19 +55,19 @@
 
 
 "blocks" : {
-"deuxPointsIf|deuxPointsElse|deuxPointsElif|deuxPointsWhile|deuxPointsFor|deuxPointsDef|conditionOneEqual|previousErrorBrackets|errorBrackets|missingParentheses|pointVirguleFin|typeVariableDeclaration|plusGrandEgalInversion|plusPetitEgalInversion|guillemetsError|invalidSyntax|indentationError|indentationErrorEmptyBlock|indentationErrorLevel|IntNotSubscriptable|ImportError": "Erreur dans le code python généré par {{target}}.",
+"deuxPointsIf|deuxPointsElse|deuxPointsElif|deuxPointsWhile|deuxPointsFor|deuxPointsDef|conditionOneEqual|previousErrorBrackets|errorBrackets|missingParentheses|pointVirguleFin|typeVariableDeclaration|plusGrandEgalInversion|plusPetitEgalInversion|guillemetsError|invalidSyntax|indentationError|indentationErrorEmptyBlock|indentationErrorLevel|IntNotSubscriptable|ImportError": "Erreur dans le code Python généré par {{target}}.",
 
 "nonAscii": "Vous avez utilisé un accent dans le code {{target}}, ce qui ne fonctionne pas",
 "IndexError": "Vous accédez à une case de la liste qui n'existe pas. Si vous utilisez une variable comme indice, vérifiez qu'elle ne peut pas être trop grande. Souvenez-vous que les cases d'une liste sont numérotées de 1 à TAILLE en {{target}}.",
 "KeyError": "Vous accédez à une clé (une case) de votre dictionnaire qui n'existe pas.\nVérifiez que la clé a bien été définie dans le dictionnaire !",
-"ZeroDivisionError": "Votre code effectue une division par zero, ce qui est impossible.\nSi vous utilisez une variable, vérifiez que le diviseur ne vaut jamais 0.",
+"ZeroDivisionError": "Votre code effectue une division par zéro, ce qui est impossible.\nSi vous utilisez une variable, vérifiez que le diviseur ne vaut jamais 0.",
 "mathDomainError": "Vous utilisez un fonction mathématique en lui donnant un nombre qui est interdit !",
 "mathDomainError_log" : "La fonction log (logarithme) prend en paramètre un nombre qui doit être STRICTEMENT SUPÉRIEUR à 0.",
 "mathDomainError_sqrt":"La fonction sqrt (racine carrée) prend en paramètre un nombre qui doit être SUPÉRIEUR OU ÉGAL à 0.",
-"EOFError": "Votre code à tenté de lire une ligne de l'entrée, mais il n'y en avait pas ou plus !\nÀ chaque fois que vous utilisez un bloc pour lire l'entrée, il faut qu'il reste du texte à lire.",
+"EOFError": "Votre code a tenté de lire une ligne de l'entrée, mais il n'y en avait pas ou plus !\nÀ chaque fois que vous utilisez un bloc pour lire l'entrée, il faut qu'il reste du texte à lire.",
 
 "valueErrorInt": "Vous avez essayé de convertir une chaîne de caractères en un nombre entier (int), mais celle-ci ne représente pas un nombre entier (ou alors, pas seulement un unique nombre entier).",
-"valueErrorIntMappage": "Vous essayez de convertir en entier une chaine de caractères qui comprend plusieurs entiers.",
+"valueErrorIntMappage": "Vous essayez de convertir en entier une chaîne de caractères qui comprend plusieurs entiers.",
 "valueErrorIntInsteadOfFloat": "Vous essayez de convertir un nombre à virgule en nombre entier.",
 
 "undefinedVar": "La variable (ou la fonction) {{undefVar}} n'existe pas, ou pas encore à cet endroit. Vérifiez que vous ne vous êtes pas trompé dans le nom !",
@@ -79,5 +79,5 @@
 "ConvertImplicit" : "Vous essayez d'utiliser le type {{type1}} comme une valeur du type {{type2}}. Mais il n'est pas possible de convertir implicitement entre ces types.",
 "CantConvert" : "Il n'est pas possible de convertir la valeur {{value}}, du type {{type1}}, vers le type {{type2}}.",
 
-"default": "Une erreur de python inconnue est survenue :\n\n{{stderr}}"
+"default": "Une erreur de Python inconnue est survenue :\n\n{{stderr}}"
 }}}
