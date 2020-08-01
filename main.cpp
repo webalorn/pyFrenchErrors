@@ -28,7 +28,7 @@ void showOutput(ParsedError& err, PyFile& codeFile, std::string target) {
         std::cout << "Une erreur s'est produite à la ligne " << err.line + 1  << " de votre code" << std::endl;
         // std::cout << "Vous avez écris le code : " << std::endl << codeFile.getLine(err.line).get() << "\n\n";
     } else {
-        std::cout << "Une erreur s'est produite dans votre code " << target;
+        std::cout << "Une erreur s'est produite dans votre code " << target << std::endl;
     }
     if (err.messageId.size()) {
         std::cout << "-> Voici le problème : \n";
@@ -36,7 +36,7 @@ void showOutput(ParsedError& err, PyFile& codeFile, std::string target) {
     }
 
     std::cout << std::endl << "Message d'erreur Python complet :" << std::endl;
-    std::cout << err.fromError->stderr;
+    std::cout << err.fromError->getDisplayableStderr();
 }
 
 int main(int argc, char* argv[]) {

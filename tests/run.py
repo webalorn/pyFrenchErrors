@@ -1,6 +1,6 @@
 import json, tempfile, pathlib, subprocess
 
-ENSURE_KEYS = ["blockId", "causeFound", "line", "messageId", "stderr", "text", "vars"]
+ENSURE_KEYS = ["blockIds", "causeFound", "line", "messageId", "stderr", "text", "vars"]
 
 ## Tools funtions
 
@@ -38,6 +38,11 @@ def simple_tests(cur_path):
 
 	for py_path in tests:
 		print("===============", str(py_path.relative_to(cur_path)))
+		prog_lang = "python"
+		if "blockly" in str(py_path):
+			prog_lang = "blockly"
+		if "scratch" in str(py_path):
+			prog_lang = "scratch"
 
 		json_path = py_path.with_suffix('.json')
 		if not json_path.exists():
@@ -51,7 +56,7 @@ def simple_tests(cur_path):
 
 		with tempfile.NamedTemporaryFile() as stdout, tempfile.NamedTemporaryFile() as stderr, tempfile.NamedTemporaryFile() as json_out_file:
 			subprocess.run(["python3", str(py_path)], stdout=stdout, stderr=stderr)
-			r = subprocess.run([str(PYFE_PATH), str(py_path), stderr.name, json_out_file.name], stdout=stdout)
+			r = subprocess.run([str(PYFE_PATH), str(py_path), stderr.name, json_out_file.name, prog_lang], stdout=stdout)
 
 			if r.returncode != 0:
 				raise TestError("Return code = "+str(r.returncode))

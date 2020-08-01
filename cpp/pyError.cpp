@@ -89,3 +89,9 @@ std::string PyError::getMessage(){
 PyLine PyError::getPyLine(){
     return PyLine(pyLine);
 }
+std::string PyError::getDisplayableStderr() {
+    // Remove the block ids from the stderr
+    std::regex reg("#BlockIds=[^\n]*\n");
+    std::string e = std::regex_replace(stderr, reg,"\n");
+    return e;
+}

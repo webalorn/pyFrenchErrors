@@ -1,7 +1,9 @@
 #include "pyLine.hpp"
+#include "utility.hpp"
 #include <cctype>
 #include <iterator>
 #include <set>
+#include <regex>
 
 PyLine::PyLine(std::string lineOfCode) {
     line = lineOfCode;
@@ -21,6 +23,18 @@ std::string PyLine::getFirstWord() {
 }
 std::string PyLine::get() {
     return line;
+}
+
+std::vector<std::string> PyLine::extractBlockIds() {
+    std::regex reg(".*#BlockIds=(.*)");
+    std::smatch match;
+
+    if (std::regex_match(line, reg) && std::regex_search(line, match, reg)) {
+        std::vector<std::string> elems = {};
+        split(match[1], '\'', elems);
+        return elems;
+    }
+    return {};
 }
 
 bool PyLine::isStruct() {

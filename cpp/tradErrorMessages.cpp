@@ -38,7 +38,7 @@ void TradErrorMessages::setMessage(ParsedError* parsedErr, std::string langage, 
         return;
     }
     if (messages[langage][target].find(messageId) == messages[langage][target].end()) {
-        LogError::log("TradErrorMessages::getMessage: messageId " + messageId + " inconnu dans le langage : " + langage);
+        LogError::log("TradErrorMessages::getMessage: messageId " + messageId + " inconnu dans le langage " + langage + ", target " + target);
         return;
     }
     std::string theMessage = messages[langage][target][messageId];

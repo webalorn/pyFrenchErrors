@@ -7,29 +7,33 @@ bool ParsedError::isDefined() {
     return messageId.size();
 }
 
-ParsedError::ParsedError(PyError& e, std::string msg, std::map<std::string, std::string> varsMap) {
+ParsedError::ParsedError(PyError& e, PyFile& fromFile, std::string msg, std::map<std::string, std::string> varsMap, int iLine) {
     messageId = msg;
     vars = varsMap;
-    line = e.getLineNumber();
     fromError = &e;
-    blockId = -1;
+
+    if (iLine != -1) {
+        line = iLine;
+    } else {
+        line = e.getLineNumber();
+    }
+    blockIds = fromFile.getLine(line).extractBlockIds();
 }
 
 nlohmann::json ParsedError::toJson() {
+    // Define the Json object
     nlohmann::json encoded = {
         {"line", line+1},
-        {"blockId", blockId},
+        {"blockIds", blockIds},
         {"messageId", messageId},
         {"text", text},
-        {"stderr", fromError->stderr},
+        {"stderr", fromError->getDisplayableStderr()},
         {"causeFound", isDefined()},
         {"vars", vars},
     };
+    // Set null values
     if (line == -1) {
         encoded["line"] = nullptr;
-    }
-    if (blockId == -1) {
-        encoded["blockId"] = nullptr;
     }
     if (messageId == "") {
         encoded["messageId"] = nullptr;
@@ -60,8 +64,7 @@ bool ErrorParser::matchWith(std::string text, std::string regString, std::vector
 
 ParsedError ErrorParser::parse() {
     std::string messageId = parseGetMessageId();
-    ParsedError err(error, messageId, messageVars);
-    err.line = errorLine;
+    ParsedError err(error, codeFile, messageId, messageVars, errorLine);
 
     return err;
 }

@@ -12,15 +12,17 @@
 
 class ParsedError {
 public:
-    int line, blockId;
+    int line;
+    std::vector<std::string> blockIds;
     std::string messageId;
     std::string text;
+    std::string errorLineText;
     std::map<std::string, std::string> vars;
     PyError* fromError;
 
     bool isDefined();
     nlohmann::json toJson();
-    ParsedError(PyError& e, std::string msg="", std::map<std::string, std::string> varsMap={});
+    ParsedError(PyError& e, PyFile& fromFile, std::string msg="", std::map<std::string, std::string> varsMap={}, int iLine=-1);
 };
 
 class ErrorParser {

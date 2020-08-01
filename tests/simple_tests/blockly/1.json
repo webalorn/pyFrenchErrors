@@ -1,0 +1,12 @@
+{
+    "blockIds": [
+        "F5CiehzBKy;y)K+v||pb",
+        "4sUnKShTv.F]}e))+HbT",
+        "/:xf,wbcbvp,tB#)a[#n"
+    ],
+    "line": 2,
+    "messageId": "undefinedVar",
+    "vars": {
+        "undefVar": "coucou"
+    }
+}

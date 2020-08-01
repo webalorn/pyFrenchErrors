@@ -1,6 +1,7 @@
 #ifndef PY_CODE_H
 #define PY_CODE_H
 
+#include <vector>
 #include <string>
 #include "utility.hpp"
 
@@ -14,6 +15,7 @@ public:
 
     std::string getFirstWord();
     std::string get();
+    std::vector<std::string> extractBlockIds();
 
     bool isStruct();
     bool isConditianal();

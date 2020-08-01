@@ -17,6 +17,7 @@ public:
     std::string getType();
     std::string getMessage();
     PyLine getPyLine();
+    std::string getDisplayableStderr();
 private:
     std::string typeOfError, detailedMessage, pyLine;
     int lineOfError; // from 0 to...

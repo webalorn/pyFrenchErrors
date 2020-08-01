@@ -30,7 +30,7 @@ Si le programme s'est correctement éxécuté, le fichier `outputDest.json` sera
 
 ```json
 {
-    "blockId": null,
+    "blockIds": ["blockId1", "blockId2", ...], // Id des blocs blockly / scratch
     "causeFound": true, // Si le message a bien été interprété
     "line": [id_de_la_ligne], // Entier >= 1
     "messageId": "[identifiant_de_l_erreur]",
